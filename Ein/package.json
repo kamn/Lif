@@ -1,0 +1,25 @@
+{
+  "name": "ein-lang",
+  "version": "0.0.1",
+  "description": "A programming language",
+  "main": "ein.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test",
+    "benchmark": "node ./benchmark/benchmark.js"
+  },
+  "author": "Kamn",
+  "license": "MIT",
+  "dependencies": {
+    "benchmark": "^2.1.0",
+    "chai": "^3.5.0",
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "lodash": "^4.13.1",
+    "mocha": "^2.5.3",
+    "pegjs": "^0.9.0",
+    "pegjs-util": "^1.3.4"
+  },
+  "bin": {
+    "ein-lang": "./src/ein.js"
+  }
+}
