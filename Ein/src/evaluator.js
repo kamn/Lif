@@ -8,6 +8,7 @@ var errors = require('./errors.js');
 var ParseError = errors.ParseError;
 var UnboundSymbolError = errors.UnboundSymbolError;
 var TypeMismatchError = errors.TypeMismatchError;
+var typeMismatch = errors.typeMismatch;
 
 //TODO: Move out
 //A Helper function to create a new Integer type
@@ -52,7 +53,7 @@ var resolveSymbol = (context, symbol) => {
 //For addition of numeric
 var builtinAdd = (list) =>
   numTypeFn(list.reduce((r,x) => {
-    if(x.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+x.data+"' of type '"+x.type+"'.");
+    if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
     return r + x.data;
   }, 0));
 
@@ -63,12 +64,12 @@ var builtinSub = ([f, ...rest]) => {
   if(f === undefined) {
     val = 0;
   }else if(rest.length === 0){
-    if(f.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+f.data+"' of type '"+f.type+"'.");
+    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
     val = -f.data;
   } else {
-    if(f.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+f.data+"' of type '"+f.type+"'.");
+    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
     val = rest.reduce((r,x) => {
-      if(x.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+x.data+"' of type '"+x.type+"'.");
+      if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
       return r - x.data
     }, f.data);
   }
@@ -79,7 +80,7 @@ var builtinSub = ([f, ...rest]) => {
 //For multiplication of numeric
 var builtinMulti = (list) =>
   numTypeFn(list.reduce((r, x) => {
-    if(x.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+x.data+"' of type '"+x.type+"'.");
+    if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
     return r * x.data
   }, 1));
 
@@ -89,13 +90,13 @@ var builtinDiv = ([f, ...rest]) => {
   if(f === undefined) {
     val = 1;
   }else if(rest.length === 0){
-    if(f.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+f.data+"' of type '"+f.type+"'.");
+    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
     val = 1 / f.data;
   } else {
-    if(f.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+f.data+"' of type '"+f.type+"'.");
+    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
 
     val = rest.reduce((r,x) => {
-      if(x.type !== "Numeric") throw new TypeMismatchError("Expected type 'Numeric', found '"+x.data+"' of type '"+x.type+"'.");
+      if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
       return r / x.data
     }, f.data);
   }
