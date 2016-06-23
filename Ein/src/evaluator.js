@@ -1,7 +1,9 @@
 'use strict';
 
 var parser = require('./grammar.js');
+var emitter = require('./emitter.js');
 var pegjsUtil = require('pegjs-util');
+var vm = require('vm');
 var _ = require('lodash');
 var util = require('util');
 var errors = require('./errors.js');
@@ -90,20 +92,30 @@ var getDefaultContext = () => {
 
 //Given text, evaluate and return the result
 var evaluate = (text) => {
-  //try {
-    var context = getDefaultContext();
     var ast = pegjsUtil.parse(parser, text);
     var jsonAst = JSON.stringify(ast, null, 2);
     if(ast.ast){
-      var results = interpret(ast.ast, context);
-      if(Array.isArray(results)) return _.last(results).data;
-      return results.data;
+      //console.log(eval('-1'));
+      //console.log("Before Core");
+      //console.log(emitter.emitEinCore());
+      //vm.runInThisContext(emitter.emitEinCore(), "repl");
+      //console.log(emitter.emit(ast.ast, emitter.getDefaultContext()));
+      var emitStr = emitter.emit(ast.ast, emitter.getDefaultContext());
+      try {
+        //console.log("Before main");
+        var vals = emitStr.map(s => eval(emitter.emitEinCore() + ";\n" +s) /*vm.runInNewContext(emitter.emitEinCore() + "\n" +s)*/);
+        //console.log("vals", vals);
+        return _.last(vals);
+      } catch(e) {
+        //console.log("Error caught!");
+        //return;
+        if(e.name === "TypeMismatchError") {
+          throw new TypeMismatchError(e.message);
+        }
+      }
     }else {
       throw new ParseError(ast.error.message, ast.error);
     }
-  //} catch (e) {
-  //  throw e;
-  //}
 };
 
 var exports = module.exports = {};
