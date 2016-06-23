@@ -5,20 +5,17 @@ var pegjsUtil = require('pegjs-util');
 var _ = require('lodash');
 var util = require('util');
 var errors = require('./errors.js');
+var core = require('./core.js');
+var builtinAdd = core.builtinAdd;
+var builtinSub = core.builtinSub;
+var builtinMulti = core.builtinMulti;
+var builtinDiv = core.builtinDiv;
 var ParseError = errors.ParseError;
 var UnboundSymbolError = errors.UnboundSymbolError;
 var TypeMismatchError = errors.TypeMismatchError;
 var typeMismatch = errors.typeMismatch;
 
 //TODO: Move out
-//A Helper function to create a new Integer type
-var numTypeFn = (val) => {
-  return {
-    type: "Numeric",
-    data: val
-  }
-}
-
 var fnTypeFn = (val) => {
   return {
     type: "Function",
@@ -50,58 +47,6 @@ var resolveSymbol = (context, symbol) => {
   return val;
 };
 
-//For addition of numeric
-var builtinAdd = (list) =>
-  numTypeFn(list.reduce((r,x) => {
-    if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
-    return r + x.data;
-  }, 0));
-
-//For subtraction of numeric
-var builtinSub = ([f, ...rest]) => {
-  var val = 0;
-
-  if(f === undefined) {
-    val = 0;
-  }else if(rest.length === 0){
-    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
-    val = -f.data;
-  } else {
-    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
-    val = rest.reduce((r,x) => {
-      if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
-      return r - x.data
-    }, f.data);
-  }
-
-  return numTypeFn(val);
-}
-
-//For multiplication of numeric
-var builtinMulti = (list) =>
-  numTypeFn(list.reduce((r, x) => {
-    if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
-    return r * x.data
-  }, 1));
-
-//For division of numeric
-var builtinDiv = ([f, ...rest]) => {
-  var val = 1;
-  if(f === undefined) {
-    val = 1;
-  }else if(rest.length === 0){
-    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
-    val = 1 / f.data;
-  } else {
-    if(f.type !== "Numeric") typeMismatch('Numeric', f.type, f.data);
-
-    val = rest.reduce((r,x) => {
-      if(x.type !== "Numeric") typeMismatch('Numeric', x.type, x.data);
-      return r / x.data
-    }, f.data);
-  }
-  return numTypeFn(val);
-}
 //Eval an S-Expression
 var evalSExpr = (sExpr, context) => {
   var sExprResult = sExpr.data.map((x) => {
