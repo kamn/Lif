@@ -47,7 +47,6 @@ var recursivePrompt = function() {
     try {
       console.log(evaluator.evaluate(_.trim(text)));
     } catch(e) {
-      //console.log(e);
       printError('REPL', e);
     }
     recursivePrompt();

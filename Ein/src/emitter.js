@@ -56,7 +56,7 @@ var getDefaultContext = () => {
   addSymbol(context, '+', fnTypeFn(builtinAdd, PLUS_FN_NAME));
   addSymbol(context, '-', fnTypeFn(builtinSub, SUB_FN_NAME));
   addSymbol(context, '*', fnTypeFn(builtinMulti, MULTI_FN_NAME));
-  addSymbol(context, '/', fnTypeFn(builtinDiv, DIV_FN_NAME));
+  addSymbol(context, '/', fnTypeFn(builtinDiv, DIV_FN_NAME))
   return context;
 }
 
