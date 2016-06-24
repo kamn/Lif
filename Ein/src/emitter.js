@@ -17,10 +17,9 @@ var MULTI_FN_NAME = "__MULTI__";
 var DIV_FN_NAME = "__DIV__";
 var NL = "\n\n";
 
-var fnTypeFn = (val, name) => {
+var fnTypeFn = (name) => {
   return {
     type: "Function",
-    data: val,
     fnName: name
   };
 }
@@ -53,10 +52,10 @@ var resolveSymbol = (symbol, context) => {
 //The default context for the language
 var getDefaultContext = () => {
   var context = createContext(null);
-  addSymbol(context, '+', fnTypeFn(builtinAdd, PLUS_FN_NAME));
-  addSymbol(context, '-', fnTypeFn(builtinSub, SUB_FN_NAME));
-  addSymbol(context, '*', fnTypeFn(builtinMulti, MULTI_FN_NAME));
-  addSymbol(context, '/', fnTypeFn(builtinDiv, DIV_FN_NAME))
+  addSymbol(context, '+', fnTypeFn(PLUS_FN_NAME));
+  addSymbol(context, '-', fnTypeFn(SUB_FN_NAME));
+  addSymbol(context, '*', fnTypeFn(MULTI_FN_NAME));
+  addSymbol(context, '/', fnTypeFn(DIV_FN_NAME))
   return context;
 }
 
