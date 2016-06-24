@@ -24,7 +24,7 @@ var evaluate = (text) => {
     if(ast.ast){
       var emitStr = emitter.emit(ast.ast, emitter.getDefaultContext());
       try {
-        var vals = emitStr.map(s => eval(emitter.emitEinCore() + ";\n" +s) /*vm.runInNewContext(emitter.emitEinCore() + "\n" +s)*/);
+        var vals = emitStr.map(s => eval(emitter.emitEinCore() + ";\n" +s));
         return _.last(vals);
       } catch(e) {
         if(e.name === "TypeMismatchError") {

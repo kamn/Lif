@@ -99,7 +99,7 @@ var emitSExpr = (ast, context) => {
   });
 
   var fn = sExprResult[0];
-  return sExprResult[0] + "([" +  emit(_.tail(sExprResult), context).join(", ") + "])";
+  return sExprResult[0] + "(" +  emit(_.tail(sExprResult), context).join(", ") + ")";
 }
 
 var emitSymbol = (ast, context) => {

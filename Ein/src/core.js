@@ -9,14 +9,14 @@ var isNumber = (n) => {
 }
 
 //For addition of numeric
-var builtinAdd = (list) =>
+var builtinAdd = (...list) =>
   list.reduce((r,x) => {
     if(!isNumber(x)) typeMismatch('Numeric', typeof x, x);
     return r + x;
   }, 0);
 
 //For subtraction of numeric
-var builtinSub = ([f, ...rest]) => {
+var builtinSub = (f, ...rest) => {
   var val = 0;
 
   if(f === undefined) {
@@ -36,14 +36,14 @@ var builtinSub = ([f, ...rest]) => {
 }
 
 //For multiplication of numeric
-var builtinMulti = (list) =>
+var builtinMulti = (...list) =>
   list.reduce((r, x) => {
     if(!isNumber(x)) typeMismatch('Numeric', typeof x, x);
     return r * x
   }, 1);
 
 //For division of numeric
-var builtinDiv = ([f, ...rest]) => {
+var builtinDiv = (f, ...rest) => {
   var val = 1;
   if(f === undefined) {
     val = 1;
