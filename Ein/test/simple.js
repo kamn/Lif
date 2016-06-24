@@ -8,6 +8,9 @@ var UnboundSymbolError = errors.UnboundSymbolError;
 var TypeMismatchError = errors.TypeMismatchError;
 
 describe('Parser', () => {
+  it('should throw error if non numeric is passed', () => {
+    expect(eval.bind(eval,'(+ 1 2 +)')).to.throw(TypeMismatchError);
+  });
   describe('Numbers', () => {
     it('should parse zero', () => {
       assert.equal(1, eval('1'));
