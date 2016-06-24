@@ -20,7 +20,7 @@ var typeMismatch = errors.typeMismatch;
 //Given text, evaluate and return the result
 var evaluate = (text) => {
     var ast = pegjsUtil.parse(parser, text);
-    var jsonAst = JSON.stringify(ast, null, 2);
+    //var jsonAst = JSON.stringify(ast, null, 2);
     if(ast.ast){
       var emitStr = emitter.emit(ast.ast, emitter.getDefaultContext());
       try {
@@ -31,7 +31,7 @@ var evaluate = (text) => {
           throw new TypeMismatchError(e.message);
         }
       }
-    }else {
+    } else {
       throw new ParseError(ast.error.message, ast.error);
     }
 };

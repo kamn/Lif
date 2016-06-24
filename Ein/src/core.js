@@ -4,6 +4,8 @@ var UnboundSymbolError = errors.UnboundSymbolError;
 var TypeMismatchError = errors.TypeMismatchError;
 var typeMismatch = errors.typeMismatch;
 
+var EIN_CORE_DOT = "ein.core.";
+
 var isNumber = (n) => {
   return typeof n === "number";
 }
@@ -11,7 +13,7 @@ var isNumber = (n) => {
 //For addition of numeric
 var builtinAdd = (...list) =>
   list.reduce((r,x) => {
-    if(!isNumber(x)) typeMismatch('Numeric', typeof x, x);
+    if(!ein.core.isNumber(x)) ein.core.typeMismatch('Numeric', typeof x, x);
     return r + x;
   }, 0);
 
@@ -22,12 +24,12 @@ var builtinSub = (f, ...rest) => {
   if(f === undefined) {
     val = 0;
   }else if(rest.length === 0){
-    if(!isNumber(f)) typeMismatch('Numeric', typeof f, f);
+    if(!ein.core.isNumber(f)) ein.core.typeMismatch('Numeric', typeof f, f);
     val = -f;
   } else {
-    if(!isNumber(f)) typeMismatch('Numeric', typeof f, f);
+    if(!ein.core.isNumber(f)) ein.core.typeMismatch('Numeric', typeof f, f);
     val = rest.reduce((r,x) => {
-      if(!isNumber(x)) typeMismatch('Numeric', typeof x, x);
+      if(!ein.core.isNumber(x)) ein.core.typeMismatch('Numeric', typeof x, x);
       return r - x
     }, f);
   }
@@ -38,7 +40,7 @@ var builtinSub = (f, ...rest) => {
 //For multiplication of numeric
 var builtinMulti = (...list) =>
   list.reduce((r, x) => {
-    if(!isNumber(x)) typeMismatch('Numeric', typeof x, x);
+    if(!ein.core.isNumber(x)) ein.core.typeMismatch('Numeric', typeof x, x);
     return r * x
   }, 1);
 
@@ -48,12 +50,12 @@ var builtinDiv = (f, ...rest) => {
   if(f === undefined) {
     val = 1;
   }else if(rest.length === 0){
-    if(!isNumber(f)) typeMismatch('Numeric', typeof f, f);
+    if(!ein.core.isNumber(f)) ein.core.typeMismatch('Numeric', typeof f, f);
     val = 1 / f;
   } else {
-    if(!isNumber(f)) typeMismatch('Numeric', typeof f, f);
+    if(!ein.core.isNumber(f)) ein.core.typeMismatch('Numeric', typeof f, f);
     val = rest.reduce((r,x) => {
-      if(!isNumber(x)) typeMismatch('Numeric', typeof x, x);
+      if(!ein.core.isNumber(x)) ein.core.typeMismatch('Numeric', typeof x, x);
       return r / x
     }, f);
   }
