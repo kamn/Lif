@@ -10,6 +10,7 @@ var readline = require('readline');
 var colors = require('colors/safe');
 var _ = require('lodash');
 var fs = require('fs');
+var emitter = require('./emitter.js');
 
 //
 var getErrorDisplayName = (e) => {
@@ -53,6 +54,13 @@ var recursivePrompt = function() {
   });
 }
 
+var program = require('commander');
+program
+.version('0.0.2')
+.option('-c, --compile <file>', 'Compile the specified file <file>')
+.option('-o, --output <file>', 'File to create <file>')
+.parse(process.argv);
+
 //For now this is REPL based only
 if(process.argv.length === 2) {
   console.log('Ein Repl');
@@ -64,12 +72,32 @@ if(process.argv.length === 2) {
   });
   recursivePrompt();
 } else {
-  fs.readFile(process.argv[2], 'utf8', function (err,data) {
+  var file = process.argv[2];
+  if(program.compile && !program.output) {
+    console.log("Output file not specified");
+    return;
+  }
+  if(program.compile && program.output) {
+    file = program.compile
+  }
+  fs.readFile(file, 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     } else {
       try {
-        console.log(evaluator.evaluate(_.trim(data)));
+        var result = evaluator.evaluate(_.trim(data), program.compile)
+        if(program.compile) {
+          fs.writeFile(program.output, result, function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+
+              console.log(`Ein compiled and saved to ${program.compile}`);
+          });
+        } else {
+          console.log(result);
+        }
+
       } catch(e) {
         printError(process.argv[2], e);
       }

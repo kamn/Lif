@@ -18,14 +18,19 @@ var TypeMismatchError = errors.TypeMismatchError;
 var typeMismatch = errors.typeMismatch;
 
 //Given text, evaluate and return the result
-var evaluate = (text) => {
+var evaluate = (text, compile) => {
     var ast = pegjsUtil.parse(parser, text);
     //var jsonAst = JSON.stringify(ast, null, 2);
     if(ast.ast){
       var emitStr = emitter.emit(ast.ast, emitter.getDefaultContext());
       try {
-        var vals = emitStr.map(s => eval(emitter.emitEinCore() + ";\n" +s));
-        return _.last(vals);
+        if(compile) {
+          var vals = emitter.emitEinCore() + emitStr.join('\n');
+          return vals;
+        } else {
+          var vals = emitStr.map(s => eval(emitter.emitEinCore() + ";\n" +s));
+          return _.last(vals);
+        }
       } catch(e) {
         if(e.name === "TypeMismatchError") {
           throw new TypeMismatchError(e.message);
