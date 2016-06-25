@@ -1,3 +1,8 @@
+June-23-2016
+---
+Filed a bug with Node about vm module
+https://github.com/nodejs/node/issues/7397
+
 June-22-2016
 ---
 So I realized that building an interpreter is every enlightening but I really want a compiler.
