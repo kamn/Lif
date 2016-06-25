@@ -86,6 +86,10 @@ var emit = (ast, context) => {
     return emitSymbol(resolveSymbol(ast.data, context));
   } else if (ast.type === "Numeric") {
     return emitNumeric(ast, context);
+  } else if (ast.type === "Boolean") {
+    return emitBoolean(ast, context);
+  } else if (ast.type === "Nil") {
+    return emitNil(ast, context);
   } else if(ast.type === "Function") {
     return emitSymbol(ast, context);
   }
@@ -110,10 +114,10 @@ var emitSymbol = (ast, context) => {
 }
 
 //Emits a numeric
-var emitNumeric = (ast, context) => {
-  return ast.data;
-}
-
+// AST
+var emitNumeric = (ast, context) => ast.data;
+var emitBoolean = (ast, context) => ast.data;
+var emitNil = (ast, context) => null;
 
 var exports = module.exports = {};
 exports.emitEinCore = emitEinCore;

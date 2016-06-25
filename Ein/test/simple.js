@@ -49,6 +49,52 @@ describe('Parser', () => {
       expect(eval.bind(eval,'(notreal 1 2)')).to.throw(UnboundSymbolError);
     });
   });
+
+  describe('Keywords', () => {
+    it('should not error on keywords', () => {
+      expect(eval.bind(eval,':a')).to.not.throw();
+    });
+  });
+
+  describe('Strings', () => {
+    it('should not error on strings', () => {
+      expect(eval.bind(eval,'"test"')).to.not.throw();
+    });
+
+    it('should not error on empty strings', () => {
+      expect(eval.bind(eval,'""')).to.not.throw();
+    });
+  });
+
+  describe('Vectors', () => {
+    it('should not error on Vectors', () => {
+      expect(eval.bind(eval,'[1 2 3]')).to.not.throw();
+    });
+
+    it('should not error on empty Vectors', () => {
+      expect(eval.bind(eval,'[]')).to.not.throw();
+    });
+  });
+
+  describe('Sets', () => {
+    it('should not error on Sets', () => {
+      expect(eval.bind(eval,'#{1 2 3}')).to.not.throw();
+    });
+
+    it('should not error on empty Sets', () => {
+      expect(eval.bind(eval,'#{}')).to.not.throw();
+    });
+  });
+
+  describe('Maps', () => {
+    it('should not error on Maps', () => {
+      expect(eval.bind(eval,'{1:2 3:4}')).to.not.throw();
+    });
+
+    it('should not error on empty Maps', () => {
+      expect(eval.bind(eval,'{}')).to.not.throw();
+    });
+  });
 });
 
 describe('Built-in Functions', () => {
