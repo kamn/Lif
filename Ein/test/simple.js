@@ -203,4 +203,26 @@ describe('Built-in Functions', () => {
       expect(eval.bind(eval,'(/ / 1)')).to.throw(TypeMismatchError);
     });
   });
+
+  describe('Built-in Equals', () => {
+    it('should be true with no arguments', () => {
+      assert.equal(true, eval('(=)'));
+    });
+
+    it('should be true with one argument', () => {
+      assert.equal(true, eval('(= 1)'));
+    });
+
+    it('should be true with two ones', () => {
+      assert.equal(true, eval('(= 1 1)'));
+    });
+
+    it('should be false with two difference numbers', () => {
+      assert.equal(false, eval('(= 1 2)'));
+    });
+
+    it('should be true with sub expressions', () => {
+      assert.equal(true, eval('(= (+ 1 1) 2)'));
+    });
+  });
 });

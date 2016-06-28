@@ -60,7 +60,7 @@ var builtinDiv = (f, ...rest) => {
   return val;
 }
 
-var builtInEqual = (f, ...args) => {
+var builtinEqual = (f, ...args) => {
   return args.reduce((r, x) => {
     return f === x && r;
   }, true);
@@ -76,3 +76,4 @@ exports.builtinAdd = builtinAdd;
 exports.builtinSub = builtinSub;
 exports.builtinMulti = builtinMulti;
 exports.builtinDiv = builtinDiv;
+exports.builtinEqual = builtinEqual;

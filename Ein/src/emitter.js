@@ -3,6 +3,7 @@ var builtinAdd = core.builtinAdd;
 var builtinSub = core.builtinSub;
 var builtinMulti = core.builtinMulti;
 var builtinDiv = core.builtinDiv;
+var builtinEqual = core.builtinEqual;
 
 var errors = require('./errors.js');
 var ParseError = errors.ParseError;
@@ -16,6 +17,7 @@ var PLUS_FN_NAME = "__PLUS__";
 var SUB_FN_NAME = "__SUB__";
 var MULTI_FN_NAME = "__MULTI__";
 var DIV_FN_NAME = "__DIV__";
+var EQUALS_FN_NAME = "__EQUALS__";
 var NL = ";\n\n";
 
 var fnTypeFn = (name) => {
@@ -55,7 +57,8 @@ var getDefaultContext = () => {
   addSymbol(context, '+', fnTypeFn(EIN_CORE_DOT + PLUS_FN_NAME));
   addSymbol(context, '-', fnTypeFn(EIN_CORE_DOT + SUB_FN_NAME));
   addSymbol(context, '*', fnTypeFn(EIN_CORE_DOT + MULTI_FN_NAME));
-  addSymbol(context, '/', fnTypeFn(EIN_CORE_DOT + DIV_FN_NAME))
+  addSymbol(context, '/', fnTypeFn(EIN_CORE_DOT + DIV_FN_NAME));
+  addSymbol(context, '=', fnTypeFn(EIN_CORE_DOT + EQUALS_FN_NAME));
   return context;
 }
 
@@ -63,10 +66,11 @@ var emitEinCore = () => {
   var coreStr = "var ein = {};" + NL;
   coreStr += "ein.core = (function(){\n";
   coreStr += "var EinCore = {}" + NL;
-  coreStr += "EinCore." + PLUS_FN_NAME+ " = " + builtinAdd.toString() + NL;
-  coreStr += "EinCore." + SUB_FN_NAME+ " = " + builtinSub.toString() + NL;
-  coreStr += "EinCore." + MULTI_FN_NAME+ " = " + builtinMulti.toString() + NL;
-  coreStr += "EinCore." + DIV_FN_NAME+ " = " + builtinDiv.toString() + NL;
+  coreStr += "EinCore." + PLUS_FN_NAME + " = " + builtinAdd.toString() + NL;
+  coreStr += "EinCore." + SUB_FN_NAME + " = " + builtinSub.toString() + NL;
+  coreStr += "EinCore." + MULTI_FN_NAME + " = " + builtinMulti.toString() + NL;
+  coreStr += "EinCore." + DIV_FN_NAME + " = " + builtinDiv.toString() + NL;
+  coreStr += "EinCore." + EQUALS_FN_NAME + " = " + builtinEqual.toString() + NL;
   coreStr += "var typeMismatch = "+ errors.typeMismatch.toString() + NL;
   coreStr += "var isNumber = " + core.isNumber.toString() + NL;
   coreStr += "var TypeMismatchError = " + TypeMismatchError.toString() + NL;
