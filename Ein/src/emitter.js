@@ -61,14 +61,17 @@ var getDefaultContext = () => {
 
 var emitEinCore = () => {
   var coreStr = "var ein = {};" + NL;
-  coreStr += "ein.core = {};" + NL;
-  coreStr += EIN_CORE_DOT + PLUS_FN_NAME+ " = " + builtinAdd.toString() + NL;
-  coreStr += EIN_CORE_DOT + SUB_FN_NAME+ " = " + builtinSub.toString() + NL;
-  coreStr += EIN_CORE_DOT + MULTI_FN_NAME+ " = " + builtinMulti.toString() + NL;
-  coreStr += EIN_CORE_DOT + DIV_FN_NAME+ " = " + builtinDiv.toString() + NL;
-  coreStr += EIN_CORE_DOT + "typeMismatch ="+ errors.typeMismatch.toString() + NL;
-  coreStr += EIN_CORE_DOT + "isNumber = " + core.isNumber.toString() + NL;
-  coreStr += EIN_CORE_DOT + "TypeMismatchError = " + TypeMismatchError.toString() + NL;
+  coreStr += "ein.core = (function(){\n";
+  coreStr += "var EinCore = {}" + NL;
+  coreStr += "EinCore." + PLUS_FN_NAME+ " = " + builtinAdd.toString() + NL;
+  coreStr += "EinCore." + SUB_FN_NAME+ " = " + builtinSub.toString() + NL;
+  coreStr += "EinCore." + MULTI_FN_NAME+ " = " + builtinMulti.toString() + NL;
+  coreStr += "EinCore." + DIV_FN_NAME+ " = " + builtinDiv.toString() + NL;
+  coreStr += "var typeMismatch = "+ errors.typeMismatch.toString() + NL;
+  coreStr += "var isNumber = " + core.isNumber.toString() + NL;
+  coreStr += "var TypeMismatchError = " + TypeMismatchError.toString() + NL;
+  coreStr += "return EinCore";
+  coreStr += "}());"
   return coreStr;
 }
 

@@ -23,6 +23,7 @@ var evaluate = (text, compile) => {
     //var jsonAst = JSON.stringify(ast, null, 2);
     if(ast.ast){
       var emitStr = emitter.emit(ast.ast, emitter.getDefaultContext());
+      //console.log(emitter.emitEinCore());
       try {
         if(compile) {
           var vals = emitter.emitEinCore() + emitStr.join('\n');
