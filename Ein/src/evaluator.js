@@ -29,7 +29,7 @@ var evaluate = (text, compile) => {
           var vals = emitter.emitEinCore() + emitStr.join('\n');
           return vals;
         } else {
-          var vals = emitStr.map(s => eval(emitter.emitEinCore() + ";\n" +s));
+          var vals = emitStr.map(s => vm.runInThisContext(emitter.emitEinCore() + ";\n" +s, "repl", {throwErrors: false}));
           return _.last(vals);
         }
       } catch(e) {
