@@ -17,19 +17,33 @@ var UnboundSymbolError = errors.UnboundSymbolError;
 var TypeMismatchError = errors.TypeMismatchError;
 var typeMismatch = errors.typeMismatch;
 
+var coreLoaded = false;
+
+var evalContext = null;
+var getContext = () => {
+  if (!evalContext) {
+    evalContext = emitter.getDefaultContext();
+  }
+  return evalContext;
+}
+
 //Given text, evaluate and return the result
 var evaluate = (text, compile) => {
     var ast = pegjsUtil.parse(parser, text);
     //var jsonAst = JSON.stringify(ast, null, 2);
     if(ast.ast){
-      var emitStr = emitter.emit(ast.ast, emitter.getDefaultContext());
+      var emitStr = emitter.emit(ast.ast, getContext());
       //console.log(emitter.emitEinCore());
       try {
         if(compile) {
           var vals = emitter.emitEinCore() + emitStr.join('\n');
           return vals;
         } else {
-          var vals = emitStr.map(s => vm.runInThisContext(emitter.emitEinCore() + ";\n" +s, "repl", {throwErrors: false}));
+          if(!coreLoaded) {
+            vm.runInThisContext(emitter.emitEinCore() + ";\n", "repl", {throwErrors: false});
+            coreLoaded = true;
+          }
+          var vals = emitStr.map(s => vm.runInThisContext(s, "repl", {throwErrors: false}));
           return _.last(vals);
         }
       } catch(e) {
