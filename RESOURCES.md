@@ -21,3 +21,8 @@ Some utils that might be useful for error messages
 
 [Algorithm W Step by Step](https://github.com/wh5a/Algorithm-W-Step-By-Step)
 [Persistent Union-find Data structure](https://www.lri.fr/~filliatr/ftp/publis/puf-wml07.pdf)
+
+[CLJS Compilation Pipeline](http://blog.fogus.me/2012/04/25/the-clojurescript-compilation-pipeline/)
+[Parens of the Dead](http://www.parens-of-the-dead.com/)
+
+[Clojure Persistent Vectors](http://hypirion.com/musings/understanding-persistent-vector-pt-1)

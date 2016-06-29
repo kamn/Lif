@@ -1,3 +1,7 @@
+June-24-2016
+---
+I realize that I need to generate way better JS, create better modules and build up the emitter.
+
 June-23-2016
 ---
 Filed a bug with Node about vm module
