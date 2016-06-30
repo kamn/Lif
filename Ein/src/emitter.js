@@ -18,13 +18,25 @@ var SUB_FN_NAME = "__SUB__";
 var MULTI_FN_NAME = "__MULTI__";
 var DIV_FN_NAME = "__DIV__";
 var EQUALS_FN_NAME = "__EQUALS__";
+var DEF_FN_NAME = "__DEF__";
+
 var NL = ";\n\n";
+var EQ = " = ";
+var CORE = "EinCore";
+var CORE_DOT = "EinCore.";
 
 var fnTypeFn = (name) => {
   return {
     type: "Function",
     fnName: name
   };
+}
+
+var declareTypeFn = (name) => {
+  return {
+    type: "VarDeclaration",
+    name: name
+  }
 }
 
 //A function to create a new context
@@ -59,6 +71,7 @@ var getDefaultContext = () => {
   addSymbol(context, '*', fnTypeFn(EIN_CORE_DOT + MULTI_FN_NAME));
   addSymbol(context, '/', fnTypeFn(EIN_CORE_DOT + DIV_FN_NAME));
   addSymbol(context, '=', fnTypeFn(EIN_CORE_DOT + EQUALS_FN_NAME));
+  addSymbol(context, 'def', declareTypeFn())
   return context;
 }
 
@@ -66,17 +79,23 @@ var emitEinCore = () => {
   var coreStr = "var ein = {};" + NL;
   coreStr += "ein.core = (function(){\n";
   coreStr += "var EinCore = {}" + NL;
-  coreStr += "EinCore." + PLUS_FN_NAME + " = " + builtinAdd.toString() + NL;
-  coreStr += "EinCore." + SUB_FN_NAME + " = " + builtinSub.toString() + NL;
-  coreStr += "EinCore." + MULTI_FN_NAME + " = " + builtinMulti.toString() + NL;
-  coreStr += "EinCore." + DIV_FN_NAME + " = " + builtinDiv.toString() + NL;
-  coreStr += "EinCore." + EQUALS_FN_NAME + " = " + builtinEqual.toString() + NL;
+  coreStr += CORE_DOT + PLUS_FN_NAME + EQ + builtinAdd.toString() + NL;
+  coreStr += CORE_DOT + SUB_FN_NAME + EQ + builtinSub.toString() + NL;
+  coreStr += CORE_DOT + MULTI_FN_NAME + EQ + builtinMulti.toString() + NL;
+  coreStr += CORE_DOT + DIV_FN_NAME + EQ + builtinDiv.toString() + NL;
+  coreStr += CORE_DOT + EQUALS_FN_NAME + EQ + builtinEqual.toString() + NL;
   coreStr += "var typeMismatch = "+ errors.typeMismatch.toString() + NL;
   coreStr += "var isNumber = " + core.isNumber.toString() + NL;
   coreStr += "var TypeMismatchError = " + TypeMismatchError.toString() + NL;
   coreStr += "return EinCore";
   coreStr += "}());"
   return coreStr;
+}
+
+var emitVar = (ast, context) => {
+  //TODO: Add to the context;
+  addSymbol(context, ast.symbol, declareTypeFn(ast.symbol));
+  return "var " + ast.symbol + " = " + emit(ast.value, context);
 }
 
 var emit = (ast, context) => {
@@ -90,7 +109,13 @@ var emit = (ast, context) => {
   if(ast.type === "S-Expression") {
     return emitSExpr(ast, context);
   } else if(ast.type === "Symbol") {
-    return emitSymbol(resolveSymbol(ast.data, context));
+    var resolvedSym = resolveSymbol(ast.data, context);
+    if(resolvedSym.type === "Function") {
+      return emitSymbol(resolvedSym, context);
+    } else if(resolvedSym.type === "VarDeclaration") {
+      return resolvedSym.name;
+      //resolvedSym.name = ast.
+    }
   } else if (ast.type === "Numeric") {
     return emitNumeric(ast, context);
   } else if (ast.type === "Boolean") {
@@ -99,11 +124,14 @@ var emit = (ast, context) => {
     return emitNil(ast, context);
   } else if(ast.type === "Function") {
     return emitSymbol(ast, context);
+  } else if(ast.type === "VarDeclaration") {
+    return emitVar(ast, context);
   }
   return ast;
 }
 
 //SExpressions are often functions
+// emitSExpr :: AST -> Context -> AST | String
 var emitSExpr = (ast, context) => {
 
   var sExprResult = ast.data.map((x) => {

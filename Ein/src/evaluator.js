@@ -2,6 +2,7 @@
 
 var parser = require('./grammar.js');
 var emitter = require('./emitter.js');
+var analyzer = require('./analyzer.js');
 var pegjsUtil = require('pegjs-util');
 var vm = require('vm');
 var _ = require('lodash');
@@ -28,7 +29,7 @@ const evaluate = (text, compile) => {
     var ast = pegjsUtil.parse(parser, text);
     //var jsonAst = JSON.stringify(ast, null, 2);
     if(ast.ast){
-      var emitStr = emitter.emit(ast.ast, getContext());
+      var emitStr = emitter.emit(analyzer.analyze(ast.ast), getContext());
       //console.log(emitter.emitEinCore());
       try {
         if(compile) {
@@ -39,10 +40,12 @@ const evaluate = (text, compile) => {
             vm.runInThisContext(emitter.emitEinCore() + ";\n", "repl", {throwErrors: false});
             coreLoaded = true;
           }
+          //console.log(emitStr);
           var vals = emitStr.map(s => vm.runInThisContext(s, "repl", {throwErrors: false}));
           return _.last(vals);
         }
       } catch(e) {
+        //console.log(e);
         if(e.name === "TypeMismatchError") {
           throw new TypeMismatchError(e.message);
         }

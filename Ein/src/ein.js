@@ -3,7 +3,7 @@
 
 //A thin wrapper for the REPL
 
-var VERSION = '0.0.1';
+var VERSION = '0.0.2';
 
 var evaluator = require('./evaluator.js');
 var readline = require('readline');
@@ -48,6 +48,7 @@ var recursivePrompt = function() {
     try {
       console.log(evaluator.evaluate(_.trim(text)));
     } catch(e) {
+      //console.log(e);
       printError('REPL', e);
     }
     recursivePrompt();
@@ -99,6 +100,7 @@ if(process.argv.length === 2) {
         }
 
       } catch(e) {
+        //console.log(e);
         printError(process.argv[2], e);
       }
     }
