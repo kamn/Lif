@@ -225,4 +225,22 @@ describe('Built-in Functions', () => {
       assert.equal(true, eval('(= (+ 1 1) 2)'));
     });
   });
+
+  describe('Variables', () => {
+    it('should be able to declare a simple variable', () => {
+      assert.equal(1, eval('(def varA 1)'));
+    });
+
+    it('should be able to use thevariable', () => {
+      assert.equal(2, eval('(+ varA 1)'));
+    });
+
+    it('should be able to declare a complex variable', () => {
+      assert.equal(5, eval('(def varB (- (+ 5 5) 5))'));
+    });
+
+    it('should be able to give back value', () => {
+      assert.equal(5, eval('varB'));
+    });
+  });
 });
