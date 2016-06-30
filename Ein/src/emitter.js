@@ -71,7 +71,6 @@ var getDefaultContext = () => {
   addSymbol(context, '*', fnTypeFn(EIN_CORE_DOT + MULTI_FN_NAME));
   addSymbol(context, '/', fnTypeFn(EIN_CORE_DOT + DIV_FN_NAME));
   addSymbol(context, '=', fnTypeFn(EIN_CORE_DOT + EQUALS_FN_NAME));
-  addSymbol(context, 'def', declareTypeFn())
   return context;
 }
 
