@@ -77,6 +77,8 @@ var getDefaultContext = () => {
 
 var emitEinCore = () => {
   var coreStr = "var ein = {};" + NL;
+  //REPL section
+  coreStr += "ein.repl = {}" + NL;
   coreStr += "ein.core = (function(){\n";
   coreStr += "var EinCore = {}" + NL;
   coreStr += CORE_DOT + PLUS_FN_NAME + EQ + builtinAdd.toString() + NL;
@@ -94,8 +96,8 @@ var emitEinCore = () => {
 
 var emitVar = (ast, context) => {
   //TODO: Add to the context;
-  addSymbol(context, ast.symbol, declareTypeFn(ast.symbol));
-  return "var " + ast.symbol + " = " + emit(ast.value, context);
+  addSymbol(context, ast.symbol, declareTypeFn("ein.repl." + ast.symbol));
+  return "ein.repl." + ast.symbol + " = " + emit(ast.value, context);
 }
 
 var emit = (ast, context) => {
