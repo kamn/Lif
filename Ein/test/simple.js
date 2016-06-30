@@ -242,5 +242,13 @@ describe('Built-in Functions', () => {
     it('should be able to give back value', () => {
       assert.equal(5, eval('varB'));
     });
+
+    it('should throw error with too few arguments', () => {
+      expect(eval.bind(eval,'(def varB)')).to.throw(Error);
+    });
+
+    it('should throw error with too many arguments', () => {
+      expect(eval.bind(eval,'(def varB 1 1)')).to.throw(Error);
+    });
   });
 });
