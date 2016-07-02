@@ -28,9 +28,6 @@ const analyzeSExpr = (ast) => {
       if (ast.data.length !== 3) {
         throw new Error('Invalid number of arguments for fn')
       }
-      if (ast.data[0].type !== AstTypes.SYM) {
-        throw new Error('Symbol is required for first argument of fn')
-      }
 
       if (ast.data[1].type !== AstTypes.VEC) {
         throw new Error('Vector is required for Second argument of fn')

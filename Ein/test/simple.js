@@ -257,4 +257,21 @@ describe('Built-in Functions', () => {
       expect(eval.bind(eval,'(def varB 1 1)')).to.throw(Error);
     });
   });
+
+  describe('Functions', () => {
+    it('should not error on valid function', () => {
+      expect(eval.bind(eval,'(fn [] (+ 1 1))')).to.not.throw();
+    });
+    it('should throw error if first argument isn\'t Vector', () => {
+      expect(eval.bind(eval,'(fn a (+ 1 1))')).to.throw();
+    });
+    it('should throw error if second argument isn\'t S-Expression', () => {
+      expect(eval.bind(eval,'(fn [] a)')).to.throw();
+    });
+
+    it('should be able to assign to variable and use', () => {
+      eval('(def testAdd1 (fn [a] (+ 1 a)))');
+      assert.equal(6, eval('(testAdd1 5)'));
+    });
+  });
 });

@@ -57,8 +57,10 @@ var addSymbol = (context, symbol, value) => {
 // Given a symbol and a context
 var resolveSymbol = (symbol, context) => {
   var val = context.symbolMap[symbol]
-  if (val === undefined || val === null) {
+  if ((val === undefined || val === null) && context.parentContext === null) {
     throw new UnboundSymbolError('Symbol \'' + symbol + '\' was unable to be resolved in this context')
+  } else if (val === undefined || val === null) {
+    return resolveSymbol(symbol, context.parentContext)
   }
   return val
 }
@@ -128,10 +130,16 @@ var emit = (ast, context) => {
   } else if (ast.type === 'VarDeclaration') {
     return emitVar(ast, context)
   } else if (ast.type === 'FunctionDeclaration') {
-    console.log('FnDeclaration');
-    return ast // emitFn(ast, context)
+    return emitFn(ast, context)
   }
   return ast
+}
+
+// emitFn :: AST -> Context -> String
+var emitFn = (ast, context) => {
+  var childContext = createContext(context)
+  ast.arguments.data.forEach(x => addSymbol(childContext, x.data, declareTypeFn(x.data)))
+  return '(' + ast.arguments.data.map(x => x.data).join(', ') + ') => { return ' + emit(ast.value, childContext) + '}'
 }
 
 // SExpressions are often functions
