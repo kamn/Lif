@@ -15,7 +15,7 @@ Expression
     return result}
 
 SExpression
-  = "(" _ expr:Expression _ ")" {
+  = "(" _ expr:(Expression/_) _ ")" {
       return {
         type: "S-Expression",
         data: expr,

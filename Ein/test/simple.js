@@ -66,6 +66,12 @@ describe('Parser', () => {
     });
   });
 
+  describe('S-Expressions', () => {
+    it('should parse empty', () => {
+      expect(eval.bind(eval,'90')).to.not.throw();
+    });
+  });
+
   describe('Vectors', () => {
     it('should not error on Vectors', () => {
       expect(eval.bind(eval,'[1 2 3]')).to.not.throw();

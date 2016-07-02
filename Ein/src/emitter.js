@@ -128,6 +128,7 @@ var emit = (ast, context) => {
   } else if (ast.type === 'VarDeclaration') {
     return emitVar(ast, context)
   } else if (ast.type === 'FunctionDeclaration') {
+    console.log('FnDeclaration');
     return ast // emitFn(ast, context)
   }
   return ast
