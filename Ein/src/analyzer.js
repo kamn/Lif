@@ -35,13 +35,33 @@ const analyzeSExpr = (ast) => {
       if (ast.data[2].type !== AstTypes.S_EXPR) {
         throw new Error('S-Expression is required for third argument of fn')
       }
-      // TODO: Check that second argument is vector
-      // TODO: Check that thrid argument is sexpr
       return {
         type: AstTypes.FN_DECL,
         arguments: ast.data[1],
         symbol: ast.data[0].data,
         value: analyze(ast.data[2])
+      }
+    }
+
+    if (sym === 'defn') {
+      if (ast.data[1].type !== AstTypes.SYM) {
+        throw new Error('Symbol is required for second argument of fn')
+      }
+      if (ast.data[2].type !== AstTypes.VEC) {
+        throw new Error('Vector is required for thrid argument of fn')
+      }
+      if (ast.data[3].type !== AstTypes.S_EXPR) {
+        throw new Error('S-Expression is required for third argument of fn')
+      }
+      return {
+        type: AstTypes.VAR_DECL,
+        symbol: ast.data[1].data,
+        value: analyze({
+          type: AstTypes.FN_DECL,
+          arguments: ast.data[2],
+          symbol: ast.data[1].data,
+          value: analyze(ast.data[3])
+        })
       }
     }
   }
