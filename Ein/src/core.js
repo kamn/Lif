@@ -59,10 +59,21 @@ var builtinDiv = (f, ...rest) => {
   return val
 }
 
+// Compare two numbers
 var builtinEqual = (f, ...args) => {
   return args.reduce((r, x) => {
     return f === x && r
   }, true)
+}
+
+var vectorHead = (v) => {
+  return v[0]
+}
+
+var vectorTail = (v) => {
+  var newVec = v.slice()
+  newVec.shift()
+  return newVec
 }
 
 var exports = module.exports = {}
@@ -72,3 +83,5 @@ exports.builtinSub = builtinSub
 exports.builtinMulti = builtinMulti
 exports.builtinDiv = builtinDiv
 exports.builtinEqual = builtinEqual
+exports.vectorHead = vectorHead
+exports.vectorTail = vectorTail

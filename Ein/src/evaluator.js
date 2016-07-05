@@ -29,6 +29,12 @@ const evaluate = (text, compile) => {
   var ast = pegjsUtil.parse(parser, text)
     // var jsonAst = JSON.stringify(ast, null, 2)
   if (ast.ast) {
+    if (!coreLoaded) {
+      vm.runInThisContext(emitter.emitEinCore() + ';\n', 'repl', {throwErrors: false})
+      coreLoaded = true
+      vm.runInThisContext(evaluate('(defn inc [x] (+ x 1))', compile), 'repl', {throwErrors: false})
+      vm.runInThisContext(evaluate('(defn dec [x] (- x 1))', compile), 'repl', {throwErrors: false})
+    }
     var emitStr = emitter.emit(analyzer.analyze(ast.ast), getContext())
       // console.log(emitter.emitEinCore());
     try {
@@ -36,10 +42,6 @@ const evaluate = (text, compile) => {
         var vals = emitter.emitEinCore() + emitStr.join('\n')
         return vals
       } else {
-        if (!coreLoaded) {
-          vm.runInThisContext(emitter.emitEinCore() + ';\n', 'repl', {throwErrors: false})
-          coreLoaded = true
-        }
         // console.log(emitStr);
         vals = emitStr.map(s => vm.runInThisContext(s, 'repl', {throwErrors: false}))
         return _.last(vals)

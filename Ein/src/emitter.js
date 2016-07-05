@@ -18,6 +18,8 @@ var SUB_FN_NAME = '__SUB__'
 var MULTI_FN_NAME = '__MULTI__'
 var DIV_FN_NAME = '__DIV__'
 var EQUALS_FN_NAME = '__EQUALS__'
+var HEAD_FN_NAME = '__HEAD__'
+var TAIL_FN_NAME = '__TAIL__'
 // var DEF_FN_NAME = '__DEF__'
 
 var NL = ';\n\n'
@@ -40,10 +42,11 @@ var declareTypeFn = (name) => {
 }
 
 // A function to create a new context
-var createContext = (parentContext) => {
+var createContext = (parentContext, name) => {
   return {
     parentContext: parentContext,
-    symbolMap: {}
+    symbolMap: {},
+    name: name
   }
 }
 
@@ -67,12 +70,14 @@ var resolveSymbol = (symbol, context) => {
 
 // The default context for the language
 var getDefaultContext = () => {
-  var context = createContext(null)
+  var context = createContext(null, 'ein.core')
   addSymbol(context, '+', fnTypeFn(EIN_CORE_DOT + PLUS_FN_NAME))
   addSymbol(context, '-', fnTypeFn(EIN_CORE_DOT + SUB_FN_NAME))
   addSymbol(context, '*', fnTypeFn(EIN_CORE_DOT + MULTI_FN_NAME))
   addSymbol(context, '/', fnTypeFn(EIN_CORE_DOT + DIV_FN_NAME))
   addSymbol(context, '=', fnTypeFn(EIN_CORE_DOT + EQUALS_FN_NAME))
+  addSymbol(context, 'head', fnTypeFn(EIN_CORE_DOT + HEAD_FN_NAME))
+  addSymbol(context, 'tail', fnTypeFn(EIN_CORE_DOT + TAIL_FN_NAME))
   return context
 }
 
@@ -80,6 +85,7 @@ var emitEinCore = () => {
   var coreStr = 'var ein = {};' + NL
   // REPL section
   coreStr += 'ein.repl = {}' + NL
+  // Core section
   coreStr += 'ein.core = (function(){\n'
   coreStr += 'var EinCore = {}' + NL
   coreStr += CORE_DOT + PLUS_FN_NAME + EQ + builtinAdd.toString() + NL
@@ -87,6 +93,8 @@ var emitEinCore = () => {
   coreStr += CORE_DOT + MULTI_FN_NAME + EQ + builtinMulti.toString() + NL
   coreStr += CORE_DOT + DIV_FN_NAME + EQ + builtinDiv.toString() + NL
   coreStr += CORE_DOT + EQUALS_FN_NAME + EQ + builtinEqual.toString() + NL
+  coreStr += CORE_DOT + HEAD_FN_NAME + EQ + core.vectorHead.toString() + NL
+  coreStr += CORE_DOT + TAIL_FN_NAME + EQ + core.vectorTail.toString() + NL
   coreStr += 'var typeMismatch = ' + errors.typeMismatch.toString() + NL
   coreStr += 'var isNumber = ' + core.isNumber.toString() + NL
   coreStr += 'var TypeMismatchError = ' + TypeMismatchError.toString() + NL
@@ -97,8 +105,8 @@ var emitEinCore = () => {
 
 var emitVar = (ast, context) => {
   // TODO: Add to the context;
-  addSymbol(context, ast.symbol, declareTypeFn('ein.repl.' + ast.symbol))
-  return 'ein.repl.' + ast.symbol + ' = ' + emit(ast.value, context)
+  addSymbol(context, ast.symbol, declareTypeFn(context.name + '.' + ast.symbol))
+  return context.name + '.' + ast.symbol + ' = ' + emit(ast.value, context)
 }
 
 var emit = (ast, context) => {
@@ -131,8 +139,14 @@ var emit = (ast, context) => {
     return emitVar(ast, context)
   } else if (ast.type === 'FunctionDeclaration') {
     return emitFn(ast, context)
+  } else if (ast.type === 'Vector') {
+    return emitVector(ast, context)
   }
   return ast
+}
+// emitVector :: AST -> Context -> String
+var emitVector = (ast, context) => {
+  return `[${ast.data.map(x => emit(x, context)).join(',')}]`
 }
 
 // emitFn :: AST -> Context -> String
