@@ -224,7 +224,7 @@ describe('Built-in Functions', () => {
     });
   });
 
-  describe('Inc', () => {
+  describe('Inc Fn', () => {
     /*it('should be 1 with no arguments', () => {
       assert.equal(1, eval('(inc)'));
     });*/
@@ -235,6 +235,24 @@ describe('Built-in Functions', () => {
 
     it('should increment by one (Negative)', () => {
       assert.equal(-99, eval('(inc -100)'));
+    });
+
+    it('should throw an error if a non-Numeric is passed (Vector)', () => {
+      expect(eval.bind(eval,'(inc [])')).to.throw(Error);
+    });
+  });
+
+  describe('Dec Fn', () => {
+    it('should decrement by one (Positive)', () => {
+      assert.equal(1, eval('(dec 2)'));
+    });
+
+    it('should decrement by one (Negative)', () => {
+      assert.equal(-101, eval('(dec -100)'));
+    });
+
+    it('should throw an error if a non-Numeric is passed (Vector)', () => {
+      expect(eval.bind(eval,'(dec [])')).to.throw(Error);
     });
   });
 
