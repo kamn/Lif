@@ -66,9 +66,8 @@ var builtinEqual = (f, ...args) => {
   }, true)
 }
 
-var vectorHead = (v) => {
-  return v[0]
-}
+// vectorHead :: Vector -> First of Vector
+var vectorHead = (v) => v[0]
 
 var vectorTail = (v) => {
   var newVec = v.slice()
@@ -76,6 +75,7 @@ var vectorTail = (v) => {
   return newVec
 }
 
+// vectorConcat :: Vector -> Vector ->
 var vectorConcat = (v1, v2) => {
   return v1.concat(v2)
 }

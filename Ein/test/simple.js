@@ -210,27 +210,34 @@ describe('Built-in Functions', () => {
     });
   });
 
-  describe('Built-in Equals', () => {
-    it('should be true with no arguments', () => {
-      assert.equal(true, eval('(=)'));
+  describe('Built-in Head', () => {
+    it('should be null with empty vector', () => {
+      assert.equal(null, eval('(head [])'));
     });
 
-    it('should be true with one argument', () => {
-      assert.equal(true, eval('(= 1)'));
+    it('should be first in vector (number)', () => {
+      assert.equal(1, eval('(head [1])'));
     });
 
-    it('should be true with two ones', () => {
-      assert.equal(true, eval('(= 1 1)'));
-    });
-
-    it('should be false with two difference numbers', () => {
-      assert.equal(false, eval('(= 1 2)'));
-    });
-
-    it('should be true with sub expressions', () => {
-      assert.equal(true, eval('(= (+ 1 1) 2)'));
+    it('should be true with two ones (boolean)', () => {
+      assert.equal(true, eval('(head [true false])'));
     });
   });
+
+  describe('Inc', () => {
+    /*it('should be 1 with no arguments', () => {
+      assert.equal(1, eval('(inc)'));
+    });*/
+
+    it('should increment by one (Positive)', () => {
+      assert.equal(2, eval('(inc 1)'));
+    });
+
+    it('should increment by one (Negative)', () => {
+      assert.equal(-99, eval('(inc -100)'));
+    });
+  });
+
 
   describe('Variables', () => {
     it('should be able to declare a simple variable', () => {

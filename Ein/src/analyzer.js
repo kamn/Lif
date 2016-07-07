@@ -5,6 +5,7 @@ const AstTypes = {
   FN: 'Function',
   VAR_DECL: 'VarDeclaration',
   FN_DECL: 'FunctionDeclaration',
+  IF_EXPR: 'IfExpression',
   S_EXPR: 'S-Expression',
   VEC: 'Vector',
   SYM: 'Symbol'
@@ -24,6 +25,20 @@ const analyzeSExpr = (ast) => {
         value: analyze(ast.data[2])
       }
     }
+
+    if (sym === 'if') {
+      if (ast.data.length !== 4) {
+        throw new Error('Invalid number of arguments for if')
+      }
+
+      return {
+        type: AstTypes.IF_EXPR,
+        condition: ast.data[1],
+        ifBranch: ast.data[2],
+        elseBranch: ast.data[3]
+      }
+    }
+
     if (sym === 'fn') {
       if (ast.data.length !== 3) {
         throw new Error('Invalid number of arguments for fn')

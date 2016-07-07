@@ -144,9 +144,17 @@ var emit = (ast, context) => {
     return emitFn(ast, context)
   } else if (ast.type === 'Vector') {
     return emitVector(ast, context)
+  } else if (ast.type === 'IfExpression') {
+    return emitIfExpr(ast, context)
   }
   return ast
 }
+
+// emitIfExpr :: AST -> Context -> String
+var emitIfExpr = (ast, context) => {
+  return `(${emit(ast.condition, context)}) ? ${emit(ast.ifBranch, context)} : ${emit(ast.elseBranch, context)}`
+}
+
 // emitVector :: AST -> Context -> String
 var emitVector = (ast, context) => {
   return `[${ast.data.map(x => emit(x, context)).join(',')}]`

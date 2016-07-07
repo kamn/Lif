@@ -44,7 +44,7 @@ const evaluate = (text, compile) => {
         var vals = emitter.emitEinCore() + emitStr.join('\n')
         return vals
       } else {
-        // console.log(emitStr);
+        // console.log(emitStr)
         vals = emitStr.map(s => vm.runInThisContext(s, 'repl', {throwErrors: false}))
         return _.last(vals)
       }
