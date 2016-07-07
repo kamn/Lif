@@ -34,6 +34,8 @@ const evaluate = (text, compile) => {
       coreLoaded = true
       vm.runInThisContext(evaluate('(defn inc [x] (+ x 1))', compile), 'repl', {throwErrors: false})
       vm.runInThisContext(evaluate('(defn dec [x] (- x 1))', compile), 'repl', {throwErrors: false})
+      vm.runInThisContext(evaluate('(def first head)', compile), 'repl', {throwErrors: false})
+      vm.runInThisContext(evaluate('(defn second [v] (head (rest v)))', compile), 'repl', {throwErrors: false})
     }
     var emitStr = emitter.emit(analyzer.analyze(ast.ast), getContext())
       // console.log(emitter.emitEinCore());

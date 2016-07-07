@@ -76,6 +76,10 @@ var vectorTail = (v) => {
   return newVec
 }
 
+var vectorConcat = (v1, v2) => {
+  return v1.concat(v2)
+}
+
 var exports = module.exports = {}
 exports.isNumber = isNumber
 exports.builtinAdd = builtinAdd
@@ -85,3 +89,4 @@ exports.builtinDiv = builtinDiv
 exports.builtinEqual = builtinEqual
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
+exports.vectorConcat = vectorConcat
