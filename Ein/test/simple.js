@@ -210,7 +210,7 @@ describe('Built-in Functions', () => {
     });
   });
 
-  describe('Built-in Head', () => {
+  describe('Head Fn', () => {
     it('should be null with empty vector', () => {
       assert.equal(null, eval('(head [])'));
     });
@@ -221,6 +221,20 @@ describe('Built-in Functions', () => {
 
     it('should be true with two ones (boolean)', () => {
       assert.equal(true, eval('(head [true false])'));
+    });
+  });
+
+  describe('Rest Fn', () => {
+    it('should be empty vector with empty vector', () => {
+      assert.deepEqual([], eval('(rest [])'));
+    });
+
+    it('should get rest of Vector but first (Numeric)', () => {
+      assert.deepEqual([1], eval('(rest [1 1])'));
+    });
+
+    it('should be true with two ones (boolean)', () => {
+      assert.deepEqual([false, false], eval('(rest [true false false])'));
     });
   });
 
