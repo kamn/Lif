@@ -342,6 +342,20 @@ describe('Built-in Functions', () => {
     });
   });
 
+  describe('If', () => {
+    it('should be able to us if statement in function', () => {
+      eval('(defn ifTest1 [b] (if b 1 -1))');
+      assert.equal(1, eval('(ifTest1 true)'));
+      assert.equal(-1, eval('(ifTest1 false)'));
+    });
+
+    it('should be able to use if statement with fn condition', () => {
+      eval('(defn ifTest2 [n] (if (= n 0) 1 -1))');
+      assert.equal(-1, eval('(ifTest2 1)'));
+      assert.equal(1, eval('(ifTest2 0)'));
+    });
+  });
+
   describe('Functions', () => {
     it('should not error on valid function', () => {
       expect(eval.bind(eval,'(fn [] (+ 1 1))')).to.not.throw();
