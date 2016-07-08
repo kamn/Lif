@@ -77,6 +77,12 @@ var vectorTail = (v) => {
 
 // vectorConcat :: Vector -> Vector ->
 var vectorConcat = (v1, v2) => {
+  if (v1 === undefined || v1 === null) {
+    return []
+  }
+  if (v2 === undefined || v2 === null) {
+    return v1
+  }
   return v1.concat(v2)
 }
 

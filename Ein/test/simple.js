@@ -102,10 +102,8 @@ describe('Parser', () => {
     });
   });
 });
-
-describe('Built-in Functions', () => {
-
-  describe('Built-in Addition', () => {
+describe('Numeric', () => {
+  describe('Addition', () => {
 
     it('should return zero if called with no arguments', () => {
       assert.equal(0, eval('(+)'));
@@ -132,7 +130,7 @@ describe('Built-in Functions', () => {
     });
   });
 
-  describe('Built-in Subtraction', () => {
+  describe('Subtraction', () => {
     it('should return zero if called with no arguments', () => {
       assert.equal(0, eval('(-)'));
     });
@@ -166,7 +164,7 @@ describe('Built-in Functions', () => {
     });
   });
 
-  describe('Built-in Multiplication', () => {
+  describe('Multiplication', () => {
     it('should return one if called with no arguments', () => {
       assert.equal(1, eval('(*)'));
     });
@@ -184,7 +182,7 @@ describe('Built-in Functions', () => {
     });
   });
 
-  describe('Built-in Division', () => {
+  describe('Division', () => {
     it('should return one if called with no arguments', () => {
       assert.equal(1, eval('(/)'));
     });
@@ -207,34 +205,6 @@ describe('Built-in Functions', () => {
 
     it('should throw error if non numeric is passed as first argument', () => {
       expect(eval.bind(eval,'(/ / 1)')).to.throw(TypeMismatchError);
-    });
-  });
-
-  describe('Head Fn', () => {
-    it('should be null with empty vector', () => {
-      assert.equal(null, eval('(head [])'));
-    });
-
-    it('should be first in vector (number)', () => {
-      assert.equal(1, eval('(head [1])'));
-    });
-
-    it('should be true with two ones (boolean)', () => {
-      assert.equal(true, eval('(head [true false])'));
-    });
-  });
-
-  describe('Rest Fn', () => {
-    it('should be empty vector with empty vector', () => {
-      assert.deepEqual([], eval('(rest [])'));
-    });
-
-    it('should get rest of Vector but first (Numeric)', () => {
-      assert.deepEqual([1], eval('(rest [1 1])'));
-    });
-
-    it('should be true with two ones (boolean)', () => {
-      assert.deepEqual([false, false], eval('(rest [true false false])'));
     });
   });
 
@@ -269,6 +239,53 @@ describe('Built-in Functions', () => {
       expect(eval.bind(eval,'(dec [])')).to.throw(Error);
     });
   });
+})
+
+describe('Vectors', () => {
+  describe('Head Fn', () => {
+    it('should be null with empty vector', () => {
+      assert.equal(null, eval('(head [])'));
+    });
+
+    it('should be first in vector (number)', () => {
+      assert.equal(1, eval('(head [1])'));
+    });
+
+    it('should be true with two ones (boolean)', () => {
+      assert.equal(true, eval('(head [true false])'));
+    });
+  });
+
+  describe('Rest Fn', () => {
+    it('should be empty vector with empty vector', () => {
+      assert.deepEqual([], eval('(rest [])'));
+    });
+
+    it('should get rest of Vector but first (Numeric)', () => {
+      assert.deepEqual([1], eval('(rest [1 1])'));
+    });
+
+    it('should be true with two ones (boolean)', () => {
+      assert.deepEqual([false, false], eval('(rest [true false false])'));
+    });
+  });
+
+  describe('Concat Fn', () => {
+    it('should return empty vector if called with no arguments', () => {
+      assert.deepEqual([], eval('(concat)'));
+    });
+
+    it('should return first vector if called with one arguments', () => {
+      assert.deepEqual([1], eval('(concat [1])'));
+    });
+
+    it('should return joined vectors', () => {
+      assert.deepEqual([1,2,3,4], eval('(concat [1 2] [3 4])'));
+    });
+  });
+});
+
+describe('Built-in Functions', () => {
 
 
   describe('Variables', () => {
