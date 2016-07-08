@@ -256,6 +256,34 @@ describe('Vectors', () => {
     });
   });
 
+  describe('First Fn', () => {
+    it('should be null with empty vector', () => {
+      assert.equal(null, eval('(first [])'));
+    });
+
+    it('should be first in vector (number)', () => {
+      assert.equal(1, eval('(first [1])'));
+    });
+
+    it('should be true with two ones (boolean)', () => {
+      assert.equal(true, eval('(first [true false])'));
+    });
+  });
+
+  describe('Second Fn', () => {
+    it('should be null with empty vector', () => {
+      assert.equal(null, eval('(second [])'));
+    });
+
+    it('should be first in vector (number)', () => {
+      assert.equal(null, eval('(second [1])'));
+    });
+
+    it('should be true with two ones (boolean)', () => {
+      assert.equal(false, eval('(second [true false])'));
+    });
+  });
+
   describe('Rest Fn', () => {
     it('should be empty vector with empty vector', () => {
       assert.deepEqual([], eval('(rest [])'));
