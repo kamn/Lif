@@ -66,6 +66,13 @@ var builtinEqual = (f, ...args) => {
   }, true)
 }
 
+// builtinLessThan ::
+var builtinLessThan = (f, ...args) => {
+  return args.reduce((r, x) => {
+    return f < x && r
+  }, true)
+}
+
 // vectorHead :: Vector -> First of Vector
 var vectorHead = (v) => v[0]
 
@@ -93,6 +100,7 @@ exports.builtinSub = builtinSub
 exports.builtinMulti = builtinMulti
 exports.builtinDiv = builtinDiv
 exports.builtinEqual = builtinEqual
+exports.builtinLessThan = builtinLessThan
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat

@@ -144,7 +144,7 @@ String "String"
   }
 
 Symbol "Symbol"
-  = sym:[-+*/!@%^&=.a-zA-Z0-9_]+ {
+  = sym:[-+*/!@%^&=.<>a-zA-Z0-9_]+ {
   return {
     type: "Symbol",
     data: sym.join(''),
