@@ -59,6 +59,8 @@ var builtinDiv = (f, ...rest) => {
   return val
 }
 
+var builtinNot = (b) => !b
+
 // Compare two numbers
 var builtinEqual = (f, ...args) => {
   return args.reduce((r, x) => {
@@ -101,6 +103,7 @@ exports.builtinMulti = builtinMulti
 exports.builtinDiv = builtinDiv
 exports.builtinEqual = builtinEqual
 exports.builtinLessThan = builtinLessThan
+exports.builtinNot = builtinNot
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
