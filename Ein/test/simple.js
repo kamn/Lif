@@ -342,6 +342,28 @@ describe('Built-in Functions', () => {
     });
   });
 
+  describe('And', () => {
+    it('should be true if called with no arguments', () => {
+      assert.equal(true, eval('(and)'));
+    })
+
+    it('should be true if only argument is true', () => {
+      assert.equal(true, eval('(and true)'))
+    })
+
+    it('should be false if only argument is false', () => {
+      assert.equal(false, eval('(and false)'))
+    })
+
+    it('should be true if all arguments are true', () => {
+      assert.equal(true, eval('(and true (= 0 0) (= 1 1))'))
+    })
+
+    it('should be false if one arguments is false', () => {
+      assert.equal(false, eval('(and true (= 0 0) (= 1 1) false)'))
+    })
+  });
+
   describe('If', () => {
     it('should be able to us if statement in function', () => {
       eval('(defn ifTest1 [b] (if b 1 -1))');

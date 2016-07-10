@@ -59,7 +59,14 @@ var builtinDiv = (f, ...rest) => {
   return val
 }
 
+// builtinNot :: Boolean -> Boolean
 var builtinNot = (b) => !b
+
+var builtinAnd = (...args) => {
+  return args.reduce((r, x) => {
+    return x && r
+  }, true)
+}
 
 // Compare two numbers
 var builtinEqual = (f, ...args) => {
@@ -70,6 +77,8 @@ var builtinEqual = (f, ...args) => {
 
 // builtinLessThan ::
 var builtinLessThan = (f, ...args) => {
+  // NOTE: This is incorrect
+  // You must check less than the previsou statement not first
   return args.reduce((r, x) => {
     return f < x && r
   }, true)
@@ -104,6 +113,7 @@ exports.builtinDiv = builtinDiv
 exports.builtinEqual = builtinEqual
 exports.builtinLessThan = builtinLessThan
 exports.builtinNot = builtinNot
+exports.builtinAnd = builtinAnd
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
