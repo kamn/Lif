@@ -21,6 +21,7 @@ var EQUALS_FN_NAME = '__EQUALS__'
 var LESS_THAN_FN_NAME = '__LESSTHAN__'
 var NOT_FN = '__NOT__'
 var AND_FN = '__AND__'
+var OR_FN = '__OR__'
 var HEAD_FN_NAME = '__HEAD__'
 var TAIL_FN_NAME = '__TAIL__'
 var CONCAT_FN_NAME = '__CONCAT__'
@@ -83,6 +84,7 @@ var getDefaultContext = () => {
   addSymbol(context, '<', fnTypeFn(EIN_CORE_DOT + LESS_THAN_FN_NAME))
   addSymbol(context, 'not', fnTypeFn(EIN_CORE_DOT + NOT_FN))
   addSymbol(context, 'and', fnTypeFn(EIN_CORE_DOT + AND_FN))
+  addSymbol(context, 'or', fnTypeFn(EIN_CORE_DOT + OR_FN))
   addSymbol(context, 'head', fnTypeFn(EIN_CORE_DOT + HEAD_FN_NAME))
   addSymbol(context, 'rest', fnTypeFn(EIN_CORE_DOT + TAIL_FN_NAME))
   addSymbol(context, 'concat', fnTypeFn(EIN_CORE_DOT + CONCAT_FN_NAME))
@@ -104,6 +106,7 @@ var emitEinCore = () => {
   coreStr += CORE_DOT + LESS_THAN_FN_NAME + EQ + core.builtinLessThan.toString() + NL
   coreStr += CORE_DOT + NOT_FN + EQ + core.builtinNot.toString() + NL
   coreStr += CORE_DOT + AND_FN + EQ + core.builtinAnd.toString() + NL
+  coreStr += CORE_DOT + OR_FN + EQ + core.builtinOr.toString() + NL
   coreStr += CORE_DOT + HEAD_FN_NAME + EQ + core.vectorHead.toString() + NL
   coreStr += CORE_DOT + TAIL_FN_NAME + EQ + core.vectorTail.toString() + NL
   coreStr += CORE_DOT + CONCAT_FN_NAME + EQ + core.vectorConcat.toString() + NL

@@ -62,10 +62,18 @@ var builtinDiv = (f, ...rest) => {
 // builtinNot :: Boolean -> Boolean
 var builtinNot = (b) => !b
 
+// builtinAnd :: [Boolean] -> Boolean
 var builtinAnd = (...args) => {
   return args.reduce((r, x) => {
     return x && r
   }, true)
+}
+
+// builtinOr :: [Boolean] -> Boolean
+var builtinOr = (...args) => {
+  return args.reduce((r, x) => {
+    return x || r
+  }, false)
 }
 
 // Compare two numbers
@@ -114,6 +122,7 @@ exports.builtinEqual = builtinEqual
 exports.builtinLessThan = builtinLessThan
 exports.builtinNot = builtinNot
 exports.builtinAnd = builtinAnd
+exports.builtinOr = builtinOr
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
