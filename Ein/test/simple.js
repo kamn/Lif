@@ -239,6 +239,20 @@ describe('Numeric', () => {
       expect(eval.bind(eval,'(dec [])')).to.throw(Error);
     });
   });
+
+  describe('Mod Fn', () => {
+    it('should return 0 if numbers are equal', () => {
+      assert.equal(0, eval('(mod 2 2)'));
+    });
+
+    it('should return 0 if multiple of second number', () => {
+      assert.equal(0, eval('(mod 15 5)'));
+    });
+
+    it('should return remainder otherwise', () => {
+      assert.equal(3, eval('(mod 9 6)'));
+    });
+  });
 })
 
 describe('Vectors', () => {

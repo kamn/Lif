@@ -59,6 +59,15 @@ var builtinDiv = (f, ...rest) => {
   return val
 }
 
+var builtinMod = (a, b) => {
+  if (a === null || a === undefined) {
+
+  } else if (b === null || b === undefined) {
+
+  }
+  return a % b
+}
+
 // builtinNot :: Boolean -> Boolean
 var builtinNot = (b) => !b
 
@@ -118,6 +127,7 @@ exports.builtinAdd = builtinAdd
 exports.builtinSub = builtinSub
 exports.builtinMulti = builtinMulti
 exports.builtinDiv = builtinDiv
+exports.builtinMod = builtinMod
 exports.builtinEqual = builtinEqual
 exports.builtinLessThan = builtinLessThan
 exports.builtinNot = builtinNot
