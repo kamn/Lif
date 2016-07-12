@@ -1,3 +1,6 @@
+var errors = require('./errors.js')
+var ArityError = errors.ArityError
+
 // The purpose of this module is to take the raw AST from the PEG
 // And then redo the AST so the emitter can ignore logic
 
@@ -17,7 +20,7 @@ const analyzeSExpr = (ast) => {
     var sym = ast.data[0].data
     if (sym === 'def') {
       if (ast.data.length !== 3) {
-        throw new Error('Invalid number of arguments for def')
+        throw new ArityError('Invalid number of arguments for def')
       }
       return {
         type: AstTypes.VAR_DECL,
@@ -28,7 +31,7 @@ const analyzeSExpr = (ast) => {
 
     if (sym === 'if') {
       if (ast.data.length !== 4) {
-        throw new Error('Invalid number of arguments for if')
+        throw new ArityError('Invalid number of arguments for if')
       }
 
       return {
@@ -41,7 +44,7 @@ const analyzeSExpr = (ast) => {
 
     if (sym === 'fn') {
       if (ast.data.length !== 3) {
-        throw new Error('Invalid number of arguments for fn')
+        throw new ArityError('Invalid number of arguments for fn')
       }
 
       if (ast.data[1].type !== AstTypes.VEC) {
