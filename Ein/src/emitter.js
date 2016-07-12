@@ -1,9 +1,4 @@
 var core = require('./core.js')
-var builtinAdd = core.builtinAdd
-var builtinSub = core.builtinSub
-var builtinMulti = core.builtinMulti
-var builtinDiv = core.builtinDiv
-var builtinEqual = core.builtinEqual
 
 var errors = require('./errors.js')
 // var ParseError = errors.ParseError
@@ -13,8 +8,8 @@ var TypeMismatchError = errors.TypeMismatchError
 var _ = require('lodash')
 
 var EIN_CORE_DOT = 'ein.core.'
-var PLUS_FN_NAME = '__PLUS__'
-var SUB_FN_NAME = '__SUB__'
+var PLUS_FN = '__PLUS__'
+var SUB_FN = '__SUB__'
 var MULTI_FN_NAME = '__MULTI__'
 var DIV_FN_NAME = '__DIV__'
 var MOD_FN = '__MOD__'
@@ -77,8 +72,8 @@ var resolveSymbol = (symbol, context) => {
 // The default context for the language
 var getDefaultContext = () => {
   var context = createContext(null, 'ein.core')
-  addSymbol(context, '+', fnTypeFn(EIN_CORE_DOT + PLUS_FN_NAME))
-  addSymbol(context, '-', fnTypeFn(EIN_CORE_DOT + SUB_FN_NAME))
+  addSymbol(context, '+', fnTypeFn(EIN_CORE_DOT + PLUS_FN))
+  addSymbol(context, '-', fnTypeFn(EIN_CORE_DOT + SUB_FN))
   addSymbol(context, '*', fnTypeFn(EIN_CORE_DOT + MULTI_FN_NAME))
   addSymbol(context, '/', fnTypeFn(EIN_CORE_DOT + DIV_FN_NAME))
   addSymbol(context, 'mod', fnTypeFn(EIN_CORE_DOT + MOD_FN))
@@ -100,12 +95,12 @@ var emitEinCore = () => {
   // Core section
   coreStr += 'ein.core = (function(){\n'
   coreStr += 'var EinCore = {}' + NL
-  coreStr += CORE_DOT + PLUS_FN_NAME + EQ + builtinAdd.toString() + NL
-  coreStr += CORE_DOT + SUB_FN_NAME + EQ + builtinSub.toString() + NL
-  coreStr += CORE_DOT + MULTI_FN_NAME + EQ + builtinMulti.toString() + NL
-  coreStr += CORE_DOT + DIV_FN_NAME + EQ + builtinDiv.toString() + NL
+  coreStr += CORE_DOT + PLUS_FN + EQ + core.builtinAdd.toString() + NL
+  coreStr += CORE_DOT + SUB_FN + EQ + core.builtinSub.toString() + NL
+  coreStr += CORE_DOT + MULTI_FN_NAME + EQ + core.builtinMulti.toString() + NL
+  coreStr += CORE_DOT + DIV_FN_NAME + EQ + core.builtinDiv.toString() + NL
   coreStr += CORE_DOT + MOD_FN + EQ + core.builtinMod.toString() + NL
-  coreStr += CORE_DOT + EQUALS_FN_NAME + EQ + builtinEqual.toString() + NL
+  coreStr += CORE_DOT + EQUALS_FN_NAME + EQ + core.builtinEqual.toString() + NL
   coreStr += CORE_DOT + LESS_THAN_FN_NAME + EQ + core.builtinLessThan.toString() + NL
   coreStr += CORE_DOT + NOT_FN + EQ + core.builtinNot.toString() + NL
   coreStr += CORE_DOT + AND_FN + EQ + core.builtinAnd.toString() + NL
