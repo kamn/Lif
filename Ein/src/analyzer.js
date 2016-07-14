@@ -83,6 +83,7 @@ const analyzeSExpr = (ast) => {
       }
     }
   }
+  ast.data = ast.data.map(d => analyze(d))
   return ast
 }
 

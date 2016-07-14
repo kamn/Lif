@@ -8,11 +8,12 @@ var isNumber = (n) => {
 }
 
 // For addition of numeric
-var builtinAdd = (...list) =>
-  list.reduce((r, x) => {
+var builtinAdd = (...list) => {
+  return list.reduce((r, x) => {
     if (!isNumber(x)) typeMismatch('Numeric', typeof x, x)
     return r + x
   }, 0)
+}
 
 // For subtraction of numeric
 var builtinSub = (f, ...rest) => {
@@ -121,6 +122,12 @@ var vectorConcat = (v1, v2) => {
   return v1.concat(v2)
 }
 
+var vectorReduce = (fn, v) => {
+  return v.reduce((r, x) => {
+    return fn(r, x)
+  })
+}
+
 var exports = module.exports = {}
 exports.isNumber = isNumber
 exports.builtinAdd = builtinAdd
@@ -136,3 +143,4 @@ exports.builtinOr = builtinOr
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
+exports.vectorReduce = vectorReduce

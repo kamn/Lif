@@ -325,6 +325,16 @@ describe('Vectors', () => {
       assert.deepEqual([1,2,3,4], eval('(concat [1 2] [3 4])'));
     });
   });
+
+  describe('Reduce Fn', () => {
+    it('should be able to pass a function to reduce with a vector', () => {
+      assert.deepEqual(6, eval('(reduce + [1 2 3])'));
+    });
+
+    it('should be able to pass a function to reduce with a vector', () => {
+      assert.deepEqual(3, eval('(reduce (fn [r x] (if (< r x) x r)) [1 2 3])'));
+    });
+  });
 });
 
 describe('Built-in Functions', () => {

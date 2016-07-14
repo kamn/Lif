@@ -26,6 +26,7 @@ const getContext = () => {
 // Given text, evaluate and return the result
 // evaluate :: String -> Boolean -> ?
 const evaluate = (text, compile) => {
+  // console.log(text)
   var ast = pegjsUtil.parse(parser, text)
     // var jsonAst = JSON.stringify(ast, null, 2)
   if (ast.ast) {
@@ -37,14 +38,18 @@ const evaluate = (text, compile) => {
       vm.runInThisContext(evaluate('(def first head)', compile), 'repl', {throwErrors: false})
       vm.runInThisContext(evaluate('(defn second [v] (head (rest v)))', compile), 'repl', {throwErrors: false})
     }
+    // console.log(ast.ast)
+    // console.log(JSON.stringify(analyzer.analyze(ast.ast), null, 2))
+
     var emitStr = emitter.emit(analyzer.analyze(ast.ast), getContext())
+    // console.log(emitStr)
+
       // console.log(emitter.emitEinCore());
     try {
       if (compile) {
         var vals = emitter.emitEinCore() + emitStr.join('\n')
         return vals
       } else {
-        // console.log(emitStr)
         vals = emitStr.map(s => vm.runInThisContext(s, 'repl', {throwErrors: false}))
         return _.last(vals)
       }
