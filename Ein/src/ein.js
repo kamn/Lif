@@ -40,12 +40,13 @@ var printError = (file, e) => {
 // NOTE: Unsure about how this affects the callstack
 var recursivePrompt = function () {
   rl.question('Ein> ', function (text) {
-    if (text === ':q') {
+    var input = _.trim(text)
+    if (input === ':q') {
       rl.close()
       return
     }
     try {
-      console.log(evaluator.evaluate(_.trim(text)))
+      console.log(evaluator.evaluate(input))
     } catch (e) {
       // console.log(e);
       printError('REPL', e)
