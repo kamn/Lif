@@ -22,6 +22,7 @@ var HEAD_FN_NAME = '__HEAD__'
 var TAIL_FN_NAME = '__TAIL__'
 var CONCAT_FN_NAME = '__CONCAT__'
 var REDUCE_FN = '__REDUCE__'
+var PRINT_FN = '__PRINT__'
 // var DEF_FN_NAME = '__DEF__'
 
 var NL = ';\n\n'
@@ -87,6 +88,7 @@ var getDefaultContext = () => {
   addSymbol(context, 'rest', fnTypeFn(EIN_CORE_DOT + TAIL_FN_NAME))
   addSymbol(context, 'concat', fnTypeFn(EIN_CORE_DOT + CONCAT_FN_NAME))
   addSymbol(context, 'reduce', fnTypeFn(EIN_CORE_DOT + REDUCE_FN))
+  addSymbol(context, 'print', fnTypeFn(EIN_CORE_DOT + PRINT_FN))
   return context
 }
 
@@ -111,6 +113,7 @@ var emitEinCore = () => {
   coreStr += CORE_DOT + TAIL_FN_NAME + EQ + core.vectorTail.toString() + NL
   coreStr += CORE_DOT + CONCAT_FN_NAME + EQ + core.vectorConcat.toString() + NL
   coreStr += CORE_DOT + REDUCE_FN + EQ + core.vectorReduce.toString() + NL
+  coreStr += CORE_DOT + PRINT_FN + EQ + core.print.toString() + NL
   coreStr += 'var typeMismatch = ' + errors.typeMismatch.toString() + NL
   coreStr += 'var isNumber = ' + core.isNumber.toString() + NL
   coreStr += 'var TypeMismatchError = ' + TypeMismatchError.toString() + NL

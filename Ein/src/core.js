@@ -128,6 +128,8 @@ var vectorReduce = (fn, v) => {
   })
 }
 
+var print = (s) => console.log(s)
+
 var exports = module.exports = {}
 exports.isNumber = isNumber
 exports.builtinAdd = builtinAdd
@@ -144,3 +146,4 @@ exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
 exports.vectorReduce = vectorReduce
+exports.print = print
