@@ -152,6 +152,8 @@ var emit = (ast, context) => {
     return emitBoolean(ast, context)
   } else if (ast.type === 'Nil') {
     return emitNil(ast, context)
+  } else if (ast.type === 'String') {
+    return ` "${ast.data}" `
   } else if (ast.type === 'Function') {
     return emitSymbol(ast, context)
   } else if (ast.type === 'VarDeclaration') {
