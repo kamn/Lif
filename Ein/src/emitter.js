@@ -4,10 +4,8 @@ var errors = require('./errors.js')
 
 var consts = require('./consts.js')
 
-// var ParseError = errors.ParseError
 var UnboundSymbolError = errors.UnboundSymbolError
 var TypeMismatchError = errors.TypeMismatchError
-// var typeMismatch = errors.typeMismatch
 var _ = require('lodash')
 
 var EIN_CORE_DOT = 'ein.core.'
@@ -26,11 +24,9 @@ var TAIL_FN_NAME = '__TAIL__'
 var CONCAT_FN_NAME = '__CONCAT__'
 var REDUCE_FN = '__REDUCE__'
 var PRINT_FN = '__PRINT__'
-// var DEF_FN_NAME = '__DEF__'
 
 var NL = ';\n\n'
 var EQ = ' = '
-// var CORE = 'EinCore'
 var CORE_DOT = 'EinCore.'
 
 var fnTypeFn = (name) => {
@@ -126,7 +122,6 @@ var emitEinCore = () => {
 }
 
 var emitVar = (ast, context) => {
-  // TODO: Add to the context;
   addSymbol(context, ast.symbol, declareTypeFn(context.name + '.' + ast.symbol))
   return context.name + '.' + ast.symbol + ' = ' + emit(ast.value, context)
 }
