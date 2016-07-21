@@ -1,6 +1,9 @@
 var core = require('./core.js')
 
 var errors = require('./errors.js')
+
+var consts = require('./consts.js')
+
 // var ParseError = errors.ParseError
 var UnboundSymbolError = errors.UnboundSymbolError
 var TypeMismatchError = errors.TypeMismatchError
@@ -32,14 +35,14 @@ var CORE_DOT = 'EinCore.'
 
 var fnTypeFn = (name) => {
   return {
-    type: 'Function',
+    type: consts.AstTypes.FN,
     fnName: name
   }
 }
 
 var declareTypeFn = (name) => {
   return {
-    type: 'VarDeclaration',
+    type: consts.AstTypes.VAR_DECL,
     name: name
   }
 }
@@ -136,11 +139,11 @@ var emit = (ast, context) => {
   }
 
   // Eval based on time
-  if (ast.type === 'S-Expression') {
+  if (ast.type === consts.AstTypes.S_EXPR) {
     return emitSExpr(ast, context)
-  } else if (ast.type === 'Symbol') {
+  } else if (ast.type === consts.AstTypes.SYM) {
     var resolvedSym = resolveSymbol(ast.data, context)
-    if (resolvedSym.type === 'Function') {
+    if (resolvedSym.type === consts.AstTypes.FN) {
       return emitSymbol(resolvedSym, context)
     } else if (resolvedSym.type === 'VarDeclaration') {
       return resolvedSym.name
