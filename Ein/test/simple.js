@@ -252,8 +252,72 @@ describe('Numeric', () => {
     it('should return remainder otherwise', () => {
       assert.equal(3, eval('(mod 9 6)'));
     });
+
+    it('should return throw type mismatch if first argument is not a number', () => {
+      expect(eval.bind(eval,'(mod + 2)')).to.throw(TypeMismatchError);
+    });
+
+    it('should return throw type mismatch if second argument is not a number', () => {
+      expect(eval.bind(eval,'(mod 2 "a")')).to.throw(TypeMismatchError);
+    });
   });
 })
+
+describe('Booleans', () => {
+  describe('Not Fn', () => {
+    it('should turn a true false', () => {
+      assert.equal(false, eval('(not true)'));
+    });
+
+    it('should throw error if not a boolean', () => {
+      expect(eval.bind(eval,'(not 1)')).to.throw();
+    });
+  });
+
+  describe('And', () => {
+    it('should be true if called with no arguments', () => {
+      assert.equal(true, eval('(and)'));
+    })
+
+    it('should be true if only argument is true', () => {
+      assert.equal(true, eval('(and true)'))
+    })
+
+    it('should be false if only argument is false', () => {
+      assert.equal(false, eval('(and false)'))
+    })
+
+    it('should be true if all arguments are true', () => {
+      assert.equal(true, eval('(and true (= 0 0) (= 1 1))'))
+    })
+
+    it('should be false if one arguments is false', () => {
+      assert.equal(false, eval('(and true (= 0 0) (= 1 1) false)'))
+    })
+  });
+
+  describe('Or', () => {
+    it('should be false if called with no arguments', () => {
+      assert.equal(false, eval('(or)'));
+    })
+
+    it('should be true if only argument is true', () => {
+      assert.equal(true, eval('(or true)'))
+    })
+
+    it('should be false if only argument is false', () => {
+      assert.equal(false, eval('(or false)'))
+    })
+
+    it('should be true if all arguments are true', () => {
+      assert.equal(true, eval('(or true (= 0 0) (= 1 1))'))
+    })
+
+    it('should be true if one arguments is true', () => {
+      assert.equal(true, eval('(or true (= 1 0) (= 2 1) false)'))
+    })
+  });
+});
 
 describe('Vectors', () => {
   describe('Head Fn', () => {
@@ -364,50 +428,6 @@ describe('Built-in Functions', () => {
     it('should throw error with too many arguments', () => {
       expect(eval.bind(eval,'(def varB 1 1)')).to.throw(Error);
     });
-  });
-
-  describe('And', () => {
-    it('should be true if called with no arguments', () => {
-      assert.equal(true, eval('(and)'));
-    })
-
-    it('should be true if only argument is true', () => {
-      assert.equal(true, eval('(and true)'))
-    })
-
-    it('should be false if only argument is false', () => {
-      assert.equal(false, eval('(and false)'))
-    })
-
-    it('should be true if all arguments are true', () => {
-      assert.equal(true, eval('(and true (= 0 0) (= 1 1))'))
-    })
-
-    it('should be false if one arguments is false', () => {
-      assert.equal(false, eval('(and true (= 0 0) (= 1 1) false)'))
-    })
-  });
-
-  describe('Or', () => {
-    it('should be false if called with no arguments', () => {
-      assert.equal(false, eval('(or)'));
-    })
-
-    it('should be true if only argument is true', () => {
-      assert.equal(true, eval('(or true)'))
-    })
-
-    it('should be false if only argument is false', () => {
-      assert.equal(false, eval('(or false)'))
-    })
-
-    it('should be true if all arguments are true', () => {
-      assert.equal(true, eval('(or true (= 0 0) (= 1 1))'))
-    })
-
-    it('should be true if one arguments is true', () => {
-      assert.equal(true, eval('(or true (= 1 0) (= 2 1) false)'))
-    })
   });
 
   describe('If', () => {

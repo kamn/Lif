@@ -115,6 +115,7 @@ var emitEinCore = () => {
   coreStr += CORE_DOT + PRINT_FN + EQ + core.print.toString() + NL
   coreStr += 'var typeMismatch = ' + errors.typeMismatch.toString() + NL
   coreStr += 'var isNumber = ' + core.isNumber.toString() + NL
+  coreStr += 'var isBool = ' + core.isBool.toString() + NL
   coreStr += 'var TypeMismatchError = ' + TypeMismatchError.toString() + NL
   coreStr += 'return EinCore'
   coreStr += '}());'

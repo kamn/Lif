@@ -7,6 +7,8 @@ var isNumber = (n) => {
   return typeof n === 'number'
 }
 
+var isBool = (n) => typeof n === 'boolean'
+
 // For addition of numeric
 var builtinAdd = (...list) => {
   return list.reduce((r, x) => {
@@ -60,17 +62,24 @@ var builtinDiv = (f, ...rest) => {
   return val
 }
 
+// For mod of numerics
 var builtinMod = (a, b) => {
   if (a === null || a === undefined) {
 
   } else if (b === null || b === undefined) {
 
   }
+  if (!isNumber(a)) typeMismatch('Numeric', typeof a, a)
+  if (!isNumber(b)) typeMismatch('Numeric', typeof b, b)
+
   return a % b
 }
 
 // builtinNot :: Boolean -> Boolean
-var builtinNot = (b) => !b
+var builtinNot = (b) => {
+  if (!isBool(b)) typeMismatch('Boolean', typeof b, b)
+  return !b
+}
 
 // builtinAnd :: [Boolean] -> Boolean
 var builtinAnd = (...args) => {
@@ -132,6 +141,7 @@ var print = (s) => console.log(s)
 
 var exports = module.exports = {}
 exports.isNumber = isNumber
+exports.isBool = isBool
 exports.builtinAdd = builtinAdd
 exports.builtinSub = builtinSub
 exports.builtinMulti = builtinMulti
