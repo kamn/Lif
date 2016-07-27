@@ -116,6 +116,9 @@ var emitEinCore = () => {
   coreStr += 'var typeMismatch = ' + errors.typeMismatch.toString() + NL
   coreStr += 'var isNumber = ' + core.isNumber.toString() + NL
   coreStr += 'var isBool = ' + core.isBool.toString() + NL
+  coreStr += 'var equals = ' + core.equals.toString() + NL
+  coreStr += 'var numericEquals = ' + core.numericEquals.toString() + NL
+  coreStr += 'var vectorEquals = ' + core.vectorEquals.toString() + NL
   coreStr += 'var TypeMismatchError = ' + TypeMismatchError.toString() + NL
   coreStr += 'return EinCore'
   coreStr += '}());'

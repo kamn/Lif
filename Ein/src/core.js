@@ -95,10 +95,38 @@ var builtinOr = (...args) => {
   }, false)
 }
 
+var numericEquals = (a, b) => a === b
+
+var vectorEquals = (a, b) => {
+  if (a.length !== b.length) {
+    return false
+  }
+
+  var result = true
+  for (var i = 0; i < a.length; i++) {
+    result = result && equals(a[i], b[i])
+  }
+  return result
+}
+
+var equals = (a, b) => {
+  // TODO: Check they are the same type
+  if (typeof a !== typeof b) {
+    return false
+  }
+  if (typeof a === 'number') {
+    return numericEquals(a, b)
+  } else if (Array.isArray(a)) {
+    return vectorEquals(a, b)
+  }
+
+  return a === b
+}
+
 // Compare two numbers
 var builtinEqual = (f, ...args) => {
   return args.reduce((r, x) => {
-    return f === x && r
+    return equals(f, x) && r
   }, true)
 }
 
@@ -148,6 +176,9 @@ exports.builtinMulti = builtinMulti
 exports.builtinDiv = builtinDiv
 exports.builtinMod = builtinMod
 exports.builtinEqual = builtinEqual
+exports.equals = equals
+exports.numericEquals = numericEquals
+exports.vectorEquals = vectorEquals
 exports.builtinLessThan = builtinLessThan
 exports.builtinNot = builtinNot
 exports.builtinAnd = builtinAnd
