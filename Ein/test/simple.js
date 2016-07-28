@@ -102,7 +102,18 @@ describe('Parser', () => {
     });
   });
 });
+
 describe('Numeric', () => {
+  describe('Equality', () => {
+    it('should detect two numbers are the same', () => {
+      assert.equal(true, eval('(= 1 1)'));
+    });
+
+    it('should detect two numbers are different', () => {
+      assert.equal(false, eval('(= 1 2)'));
+    });
+  });
+
   describe('Addition', () => {
 
     it('should return zero if called with no arguments', () => {
@@ -264,6 +275,16 @@ describe('Numeric', () => {
 })
 
 describe('Booleans', () => {
+  describe('Equality', () => {
+    it('should detect two booleans are the same', () => {
+      assert.equal(true, eval('(= true true)'));
+    });
+
+    it('should detect two booleans are different', () => {
+      assert.equal(false, eval('(= true false)'));
+    });
+  });
+
   describe('Not Fn', () => {
     it('should turn a true false', () => {
       assert.equal(false, eval('(not true)'));
@@ -320,6 +341,20 @@ describe('Booleans', () => {
 });
 
 describe('Vectors', () => {
+  describe('Equality', () => {
+    it('should detect two vectors are the same', () => {
+      assert.equal(true, eval('(= [1 2] [1 2])'));
+    });
+
+    //it('should detect two nested vectors are the same', () => {
+    //  assert.equal(true, eval('(= [[1 [3]] 2] [[1 [3]] 2])'));
+    //});
+
+    it('should detect two vectors are different', () => {
+      assert.equal(false, eval('(= [1 2] [1 2 3])'));
+    });
+  });
+
   describe('Head Fn', () => {
     it('should be null with empty vector', () => {
       assert.equal(null, eval('(head [])'));
