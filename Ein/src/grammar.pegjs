@@ -7,7 +7,7 @@ Expression
         result.push(tail[i][1]);
       }
     return result}
-  / head:DataType tail:(_ DataType)* {
+  / head:DataType tail:((OneWhitespace Atom) /(_ DataType))* {
       var result = [head], i;
       for (i = 0; i < tail.length; i++) {
         result.push(tail[i][1]);
