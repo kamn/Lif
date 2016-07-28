@@ -340,18 +340,34 @@ describe('Booleans', () => {
   });
 });
 
+describe('String', () => {
+  describe('Equality', () => {
+    it('should detect two string are the same', () => {
+      assert.equal(true, eval('(= "abc" "abc")'));
+    });
+
+    it('should detect two string are different', () => {
+      assert.equal(false, eval('(= "ABC" "abc")'));
+    });
+  });
+});
+
 describe('Vectors', () => {
   describe('Equality', () => {
     it('should detect two vectors are the same', () => {
       assert.equal(true, eval('(= [1 2] [1 2])'));
     });
 
-    //it('should detect two nested vectors are the same', () => {
-    //  assert.equal(true, eval('(= [[1 [3]] 2] [[1 [3]] 2])'));
-    //});
+    it('should detect two nested vectors are the same', () => {
+      assert.equal(true, eval('(= [[1 [3]] 2] [[1 [3]] 2])'));
+    });
 
     it('should detect two vectors are different', () => {
       assert.equal(false, eval('(= [1 2] [1 2 3])'));
+    });
+
+    it('should detect two nested vectors are different', () => {
+      assert.equal(false, eval('(= [[1 [3]] 2] [[1 [3 4]] 2])'));
     });
   });
 
