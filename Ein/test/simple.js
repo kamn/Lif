@@ -350,6 +350,16 @@ describe('String', () => {
       assert.equal(false, eval('(= "ABC" "abc")'));
     });
   });
+
+  describe('Count Fn', () => {
+    it('should be 0 with empty string', () => {
+      assert.equal(0, eval('(count "")'));
+    });
+
+    it('should be number of characters in string', () => {
+      assert.equal(5, eval('(count "first")'));
+    });
+  });
 });
 
 describe('Vectors', () => {
@@ -368,6 +378,16 @@ describe('Vectors', () => {
 
     it('should detect two nested vectors are different', () => {
       assert.equal(false, eval('(= [[1 [3]] 2] [[1 [3 4]] 2])'));
+    });
+  });
+
+  describe('Count Fn', () => {
+    it('should be 0 with empty vector', () => {
+      assert.equal(0, eval('(count [])'));
+    });
+
+    it('should be number of elements in vector', () => {
+      assert.equal(3, eval('(count [1 2 3])'));
     });
   });
 

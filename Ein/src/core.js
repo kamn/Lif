@@ -139,6 +139,10 @@ var builtinLessThan = (f, ...args) => {
   }, true)
 }
 
+var builtinCount = (i) => {
+  return i.length
+}
+
 // vectorHead :: Vector -> First of Vector
 var vectorHead = (v) => v[0]
 
@@ -183,6 +187,7 @@ exports.builtinLessThan = builtinLessThan
 exports.builtinNot = builtinNot
 exports.builtinAnd = builtinAnd
 exports.builtinOr = builtinOr
+exports.builtinCount = builtinCount
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
