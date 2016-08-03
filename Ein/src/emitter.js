@@ -20,6 +20,7 @@ var NOT_FN = '__NOT__'
 var AND_FN = '__AND__'
 var OR_FN = '__OR__'
 var COUNT_FN = '__COUNT__'
+var GET_FN = '__GET__'
 var HEAD_FN_NAME = '__HEAD__'
 var TAIL_FN_NAME = '__TAIL__'
 var CONCAT_FN_NAME = '__CONCAT__'
@@ -85,6 +86,7 @@ var getDefaultContext = () => {
   addSymbol(context, 'and', fnTypeFn(EIN_CORE_DOT + AND_FN))
   addSymbol(context, 'or', fnTypeFn(EIN_CORE_DOT + OR_FN))
   addSymbol(context, 'count', fnTypeFn(EIN_CORE_DOT + COUNT_FN))
+  addSymbol(context, 'get', fnTypeFn(EIN_CORE_DOT + GET_FN))
   addSymbol(context, 'head', fnTypeFn(EIN_CORE_DOT + HEAD_FN_NAME))
   addSymbol(context, 'rest', fnTypeFn(EIN_CORE_DOT + TAIL_FN_NAME))
   addSymbol(context, 'concat', fnTypeFn(EIN_CORE_DOT + CONCAT_FN_NAME))
@@ -111,6 +113,7 @@ var emitEinCore = () => {
   coreStr += CORE_DOT + AND_FN + EQ + core.builtinAnd.toString() + NL
   coreStr += CORE_DOT + OR_FN + EQ + core.builtinOr.toString() + NL
   coreStr += CORE_DOT + COUNT_FN + EQ + core.builtinCount.toString() + NL
+  coreStr += CORE_DOT + GET_FN + EQ + core.builtinGet.toString() + NL
   coreStr += CORE_DOT + HEAD_FN_NAME + EQ + core.vectorHead.toString() + NL
   coreStr += CORE_DOT + TAIL_FN_NAME + EQ + core.vectorTail.toString() + NL
   coreStr += CORE_DOT + CONCAT_FN_NAME + EQ + core.vectorConcat.toString() + NL

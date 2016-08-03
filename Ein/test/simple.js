@@ -360,6 +360,20 @@ describe('String', () => {
       assert.equal(5, eval('(count "first")'));
     });
   });
+
+  describe('Get Fn', () => {
+    it('should be null with empty string', () => {
+      assert.equal(null, eval('(get "" 1)'));
+    });
+
+    it('should be default with empty string', () => {
+      assert.equal("a", eval('(get "" 1 "a")'));
+    });
+
+    it('should be the character at index', () => {
+      assert.equal("f", eval('(get "first" 0)'));
+    });
+  });
 });
 
 describe('Vectors', () => {
@@ -388,6 +402,20 @@ describe('Vectors', () => {
 
     it('should be number of elements in vector', () => {
       assert.equal(3, eval('(count [1 2 3])'));
+    });
+  });
+
+  describe('Get Fn', () => {
+    it('should be null with empty vector', () => {
+      assert.equal(null, eval('(get [] 1)'));
+    });
+
+    it('should be default with empty vector', () => {
+      assert.equal("a", eval('(get [] 1 "a")'));
+    });
+
+    it('should be the character at index', () => {
+      assert.equal(1, eval('(get [1 2 3] 0)'));
     });
   });
 

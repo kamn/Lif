@@ -143,6 +143,12 @@ var builtinCount = (i) => {
   return i.length
 }
 
+var builtinGet = (o, indx, notFound) => {
+  var result = o[indx]
+  notFound = notFound === undefined ? null : notFound
+  return result === undefined ? notFound : result
+}
+
 // vectorHead :: Vector -> First of Vector
 var vectorHead = (v) => v[0]
 
@@ -188,6 +194,7 @@ exports.builtinNot = builtinNot
 exports.builtinAnd = builtinAnd
 exports.builtinOr = builtinOr
 exports.builtinCount = builtinCount
+exports.builtinGet = builtinGet
 exports.vectorHead = vectorHead
 exports.vectorTail = vectorTail
 exports.vectorConcat = vectorConcat
