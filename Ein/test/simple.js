@@ -351,6 +351,28 @@ describe('String', () => {
     });
   });
 
+  describe('Str Fn', () => {
+    it('should return empty string if called with no arguments', () => {
+      assert.equal("", eval('(str)'));
+    });
+
+    it('should return given string if only called with one argument', () => {
+      assert.equal("first", eval('(str "first")'));
+    });
+
+    it('should return given strings concated together', () => {
+      assert.equal("A string", eval('(str "A" "string")'));
+    });
+
+    it('should convert a number to string representation ', () => {
+      assert.equal("10", eval('(str 10)'));
+    });
+
+    it('should convert a vector to string representation ', () => {
+      assert.equal("[10 11]", eval('(str [10 11])'));
+    });
+  });
+
   describe('Count Fn', () => {
     it('should be 0 with empty string', () => {
       assert.equal(0, eval('(count "")'));
