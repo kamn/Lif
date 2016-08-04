@@ -61,6 +61,10 @@ describe('Parser', () => {
       expect(eval.bind(eval,'"test"')).to.not.throw();
     });
 
+    it('should not error on strings with spaces', () => {
+      expect(eval.bind(eval,'"test "')).to.not.throw();
+    });
+
     it('should not error on empty strings', () => {
       expect(eval.bind(eval,'""')).to.not.throw();
     });

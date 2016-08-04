@@ -135,7 +135,7 @@ Keyword "Keyword"
   }
 
 String "String"
- = "\"" sym:[-+*/!@%^&=.a-zA-Z0-9_]* "\""{
+ = "\"" sym:[-+*/!@%^&=.a-zA-Z0-9_ ]* "\""{
   return {
     type: "String",
     data: sym.join(''),
